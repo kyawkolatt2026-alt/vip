@@ -15,15 +15,13 @@
             --bg-main: #0f172a; 
             --bg-body: #f8fafc;
             --accent: #d4af37; 
+            --gold: #fbbf24;
             --text-dark: #1e293b;
             --text-light: #64748b;
             --card-bg: #ffffff;
             --card-border: #e2e8f0;
-            --success: #22c55e;
-            --danger: #ef4444;
         }
 
-        /* Dark Mode Styles */
         body.dark-mode {
             --bg-body: #020617;
             --text-dark: #f8fafc;
@@ -32,32 +30,54 @@
             --card-border: #334155;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s, color 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: var(--bg-body); color: var(--text-dark); }
 
         /* Login */
         #loginSection { position: fixed; inset: 0; background: #0f172a; display: flex; align-items: center; justify-content: center; z-index: 2000; }
-        .login-card { background: white; padding: 40px; border-radius: 24px; width: 90%; max-width: 380px; text-align: center; color: #1e293b; }
+        .login-card { background: white; padding: 40px; border-radius: 24px; width: 90%; max-width: 380px; text-align: center; color: #333; }
 
         /* Header */
-        .header { background: #0f172a; padding: 50px 20px; color: white; text-align: center; position: relative; border-bottom: 2px solid var(--accent); }
+        .header { background: #0f172a; padding: 50px 20px; color: white; text-align: center; position: relative; }
         .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
-        .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; font-size: 16px; }
+        .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; }
 
         .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 600px; margin: 25px auto 0; }
         .stat-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .stat-card h2 { font-size: 32px; color: var(--accent); }
+        .stat-card h2 { font-size: 32px; color: var(--gold); }
 
         /* Search */
         .search-container { max-width: 600px; margin: -28px auto 0; padding: 0 15px; position: relative; z-index: 10; }
         .search-input { width: 100%; padding: 18px 18px 18px 50px; border-radius: 15px; border: none; box-shadow: 0 10px 15px rgba(0,0,0,0.1); font-weight: 600; outline: none; background: var(--card-bg); color: var(--text-dark); border: 1px solid var(--card-border); }
 
-        /* User List */
-        .container { max-width: 1200px; margin: 40px auto; padding: 25px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        /* Container */
+        .container { max-width: 1200px; margin: 40px auto; padding: 25px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding-bottom: 100px; }
         .user-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
-        /* VIP Card Preview */
-        .vip-membership-card { width: 350px; height: 210px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 20px; color: white; display: flex; flex-direction: column; justify-content: space-between; padding: 25px; border: 1px solid rgba(212, 175, 55, 0.3); }
+        /* --- REALISTIC VIP CARD --- */
+        .card-wrapper { padding: 20px; background: transparent; }
+        
+        .vip-membership-card { 
+            width: 350px; height: 210px; 
+            background: #0f172a; /* အမည်းရောင် အသေသတ်မှတ် */
+            border-radius: 20px; position: relative; overflow: hidden; 
+            color: white !important; display: flex; flex-direction: column; 
+            justify-content: space-between; padding: 25px; 
+            border: 2px solid #d4af37;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card-header { display: flex; justify-content: space-between; align-items: center; }
+        .card-title { font-weight: 900; font-size: 16px; color: #fbbf24; letter-spacing: 1px; }
+        .chip { width: 45px; height: 32px; background: linear-gradient(135deg, #e5c06d, #b4934a); border-radius: 6px; }
+
+        .card-number { font-family: monospace; font-size: 20px; letter-spacing: 2px; font-weight: bold; margin: 15px 0; color: #fff !important; }
+        
+        .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+        .v-label { font-size: 8px; opacity: 0.7; text-transform: uppercase; display: block; }
+        .v-value { font-size: 14px; font-weight: bold; color: #fff !important; }
+
+        .thanks-text { font-size: 11px; color: #fbbf24; font-weight: bold; margin-top: 5px; text-align: right; }
 
         /* Modals */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
@@ -74,8 +94,8 @@
 
     <div id="loginSection">
         <div class="login-card">
-            <i class="fas fa-shield-halved fa-3x" style="color: var(--accent); margin-bottom: 15px;"></i>
-            <h2>ADMIN LOGIN</h2>
+            <i class="fas fa-crown fa-3x" style="color: var(--accent); margin-bottom: 15px;"></i>
+            <h2>AGE ADMIN</h2>
             <input type="text" id="adminUser" placeholder="Username">
             <input type="password" id="adminPass" placeholder="Password">
             <button class="btn-main" onclick="handleLogin()">LOGIN</button>
@@ -85,20 +105,20 @@
     <div id="mainContent" style="display: none;">
         <div class="header">
             <div class="nav-icons">
-                <button class="icon-btn" onclick="toggleDarkMode()" id="darkBtn"><i class="fas fa-moon"></i></button>
+                <button class="icon-btn" onclick="toggleDarkMode()"><i class="fas fa-moon" id="themeIcon"></i></button>
                 <button class="icon-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i></button>
             </div>
-            <h1 style="font-weight: 900; letter-spacing: 2px;">AGE <span style="color:var(--accent)">VIP</span></h1>
+            <h1 style="font-weight: 900;">AGE <span style="color:var(--accent)">VIP</span></h1>
             <div class="dashboard">
-                <div class="stat-card"> <h2 id="totalCount">0</h2> <p style="font-size: 10px; opacity: 0.7;">TOTAL USERS</p> </div>
-                <div class="stat-card"> <h2 id="activeCount">0</h2> <p style="font-size: 10px; opacity: 0.7;">ACTIVE VIP</p> </div>
+                <div class="stat-card"> <h2 id="totalCount">0</h2> <p>TOTAL USERS</p> </div>
+                <div class="stat-card"> <h2 id="activeCount">0</h2> <p>ACTIVE VIP</p> </div>
             </div>
         </div>
 
         <div class="search-container">
             <div style="position:relative;">
                 <i class="fas fa-search" style="position:absolute; left:20px; top:20px; color:#94a3b8;"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search by name or ID..." onkeyup="filterUsers()">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search users..." onkeyup="filterUsers()">
             </div>
         </div>
 
@@ -108,35 +128,43 @@
 
     <div class="modal-overlay" id="inputModal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 15px;">Add New VIP</h3>
-            <input type="text" id="mId" placeholder="Client ID / Token">
+            <h3>Register VIP Member</h3>
+            <input type="text" id="mId" placeholder="Token / ID">
             <input type="text" id="mName" placeholder="Customer Name">
             <input type="date" id="mDate">
-            <button class="btn-main" onclick="handleSaveData()">SAVE & CREATE CARD</button>
+            <button class="btn-main" onclick="handleSaveData()">ACTIVATE & CREATE CARD</button>
             <button class="btn-main" style="background:#eee; color:#333;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="voucherOverlay">
         <div style="display: flex; flex-direction: column; align-items: center;">
-            <div class="vip-membership-card" id="voucherPrint">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <div style="font-weight:900; color:var(--accent);">VIP MEMBERSHIP</div>
-                    <div style="width:40px; height:28px; background:linear-gradient(135deg, #e5c06d, #b4934a); border-radius:6px;"></div>
-                </div>
-                <div id="vId" style="font-family:monospace; font-size:20px; font-weight:bold; letter-spacing:2px;"></div>
-                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
-                    <div><span style="font-size:8px; opacity:0.6;">NAME</span><br><span id="vName" style="font-weight:bold;"></span></div>
-                    <div style="text-align:right;"><span style="font-size:8px; opacity:0.6;">EXPIRY</span><br><span id="vExp" style="font-weight:bold; color:var(--accent);"></span></div>
+            <div class="card-wrapper">
+                <div class="vip-membership-card" id="voucherPrint">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-crown"></i> VIP MEMBERSHIP</div>
+                        <div class="chip"></div>
+                    </div>
+                    <div id="vId" class="card-number">0000 0000 0000</div>
+                    <div class="card-bottom">
+                        <div>
+                            <span class="v-label">MEMBER NAME</span>
+                            <span id="vName" class="v-value">Customer Name</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="v-label">EXPIRY DATE</span>
+                            <span id="vExp" class="v-value" style="color:#fbbf24 !important;">01/01/2026</span>
+                            <div class="thanks-text">ကျေးဇူးတင်ပါတယ်</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <button class="btn-gold" style="width:350px; margin-top:20px;" onclick="downloadVoucher()">SAVE TO GALLERY</button>
-            <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="color:white; background:none; border:none; margin-top:15px; cursor:pointer;">CLOSE PREVIEW</button>
+            <button class="btn-gold" style="width:350px; margin-top:10px;" onclick="downloadVoucher()">SAVE TO GALLERY</button>
+            <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="color:white; background:none; border:none; margin-top:15px; cursor:pointer;">CLOSE</button>
         </div>
     </div>
 
     <script>
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyB3cFSVLfpvHPeD732r-iL4Yfhi0wHEuOA",
             authDomain: "vipsystem-c301c.firebaseapp.com",
@@ -149,14 +177,13 @@
         const db = firebase.firestore();
         let allUsers = [];
 
-        // Auth
         function handleLogin() {
             const u = document.getElementById('adminUser').value;
             const p = document.getElementById('adminPass').value;
             if(u === "AGEVPN" && p === "1234567") {
                 localStorage.setItem("ageLogin", "true");
                 checkAuth();
-            } else { alert("Login Failed!"); }
+            } else { alert("မှားယွင်းနေပါသည်။"); }
         }
         function handleLogout() { localStorage.removeItem("ageLogin"); checkAuth(); }
         function checkAuth() {
@@ -165,46 +192,36 @@
             document.getElementById('mainContent').style.display = auth ? 'block' : 'none';
         }
 
-        // Dark Mode Toggle
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('#darkBtn i');
-            if(document.body.classList.contains('dark-mode')) {
-                icon.className = 'fas fa-sun';
-                localStorage.setItem("theme", "dark");
-            } else {
-                icon.className = 'fas fa-moon';
-                localStorage.setItem("theme", "light");
-            }
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
 
-        // Load Saved Theme
-        if(localStorage.getItem("theme") === "dark") {
-            document.body.classList.add('dark-mode');
-            document.querySelector('#darkBtn i').className = 'fas fa-sun';
-        }
-
-        // User Logic
         function handleSaveData() {
             const id = document.getElementById('mId').value.trim();
             const name = document.getElementById('mName').value.trim();
             const exp = document.getElementById('mDate').value;
-            if(!id || !name || !exp) return alert("Please fill all fields!");
+            if(!id || !name || !exp) return alert("အချက်အလက်ပြည့်စုံအောင်ဖြည့်ပါ။");
 
             db.collection("users").doc(id).set({ username: name, expiryDate: exp }, { merge: true }).then(() => {
                 document.getElementById('inputModal').style.display='none';
-                document.getElementById('vId').innerText = id;
+                document.getElementById('vId').innerText = id.match(/.{1,4}/g).join(' ');
                 document.getElementById('vName').innerText = name;
-                document.getElementById('vExp').innerText = exp;
+                document.getElementById('vExp').innerText = exp.split('-').reverse().join('/');
                 document.getElementById('voucherOverlay').style.display = 'flex';
             });
         }
 
         function downloadVoucher() {
-            html2canvas(document.getElementById('voucherPrint'), { scale: 3 }).then(canvas => {
+            html2canvas(document.getElementById('voucherPrint'), {
+                scale: 3,
+                backgroundColor: null,
+                useCORS: true
+            }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `VIP_${document.getElementById('vName').innerText}.png`;
-                link.href = canvas.toDataURL();
+                link.download = `VIP_CARD.png`;
+                link.href = canvas.toDataURL("image/png");
                 link.click();
             });
         }
@@ -217,20 +234,17 @@
                 const color = days > 5 ? '#22c55e' : '#ef4444';
                 list.innerHTML += `
                     <div class="user-card">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-                            <span style="font-weight:bold; font-size:18px;">${u.username}</span>
-                            <span style="font-size:10px; background:rgba(0,0,0,0.05); padding:4px 8px; border-radius:6px;">${u.id}</span>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                            <span style="font-weight:bold;">${u.username}</span>
+                            <span style="font-size:10px; opacity:0.6;">${u.id}</span>
                         </div>
-                        <div style="font-size:12px; color:var(--text-light); margin-bottom:8px;">
-                            Expires: ${u.expiryDate} 
-                            <span style="float:right; color:${color}; font-weight:bold;">${days > 0 ? days+' Days' : 'Expired'}</span>
-                        </div>
-                        <div style="height:6px; background:rgba(0,0,0,0.05); border-radius:10px; overflow:hidden;">
+                        <div style="font-size:12px; color:var(--text-light);">Exp: ${u.expiryDate} <span style="float:right; color:${color}">${days > 0 ? days+' Days' : 'Expired'}</span></div>
+                        <div style="height:6px; background:rgba(0,0,0,0.05); border-radius:10px; margin-top:10px; overflow:hidden;">
                             <div style="width:${Math.max(0,(days/30)*100)}%; height:100%; background:${color};"></div>
                         </div>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px;">
-                            <button style="padding:10px; border-radius:10px; border:1px solid var(--card-border); background:none; color:var(--text-dark); cursor:pointer;" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')">Edit</button>
-                            <button style="padding:10px; border-radius:10px; border:none; background:#fee2e2; color:#be123c; cursor:pointer;" onclick="if(confirm('Delete user?')) db.collection('users').doc('${u.id}').delete()">Delete</button>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px;">
+                            <button style="padding:8px; border-radius:8px; border:1px solid #ddd; background:none; color:inherit; cursor:pointer;" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')">Edit</button>
+                            <button style="padding:8px; border-radius:8px; border:none; background:#fee2e2; color:#be123c; cursor:pointer;" onclick="if(confirm('Delete?')) db.collection('users').doc('${u.id}').delete()">Delete</button>
                         </div>
                     </div>`;
             });
