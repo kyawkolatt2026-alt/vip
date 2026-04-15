@@ -33,11 +33,9 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         body { background: var(--bg-body); color: var(--text-dark); }
 
-        /* Login */
         #loginSection { position: fixed; inset: 0; background: #0f172a; display: flex; align-items: center; justify-content: center; z-index: 2000; }
         .login-card { background: white; padding: 40px; border-radius: 24px; width: 90%; max-width: 380px; text-align: center; color: #333; }
 
-        /* Header */
         .header { background: #0f172a; padding: 50px 20px; color: white; text-align: center; position: relative; }
         .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
         .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; }
@@ -46,42 +44,37 @@
         .stat-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
         .stat-card h2 { font-size: 32px; color: var(--gold); }
 
-        /* Search */
         .search-container { max-width: 600px; margin: -28px auto 0; padding: 0 15px; position: relative; z-index: 10; }
         .search-input { width: 100%; padding: 18px 18px 18px 50px; border-radius: 15px; border: none; box-shadow: 0 10px 15px rgba(0,0,0,0.1); font-weight: 600; outline: none; background: var(--card-bg); color: var(--text-dark); border: 1px solid var(--card-border); }
 
-        /* Container */
         .container { max-width: 1200px; margin: 40px auto; padding: 25px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding-bottom: 100px; }
         .user-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
-        /* --- REALISTIC VIP CARD --- */
-        .card-wrapper { padding: 20px; background: transparent; }
-        
+        /* VIP Card Preview Styling */
+        .card-wrapper { padding: 10px; background: transparent; }
         .vip-membership-card { 
-            width: 350px; height: 210px; 
-            background: #0f172a; /* အမည်းရောင် အသေသတ်မှတ် */
+            width: 350px; height: 210px; background: #0f172a; 
             border-radius: 20px; position: relative; overflow: hidden; 
             color: white !important; display: flex; flex-direction: column; 
-            justify-content: space-between; padding: 25px; 
-            border: 2px solid #d4af37;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            justify-content: space-between; padding: 25px; border: 2px solid #d4af37;
         }
-
         .card-header { display: flex; justify-content: space-between; align-items: center; }
         .card-title { font-weight: 900; font-size: 16px; color: #fbbf24; letter-spacing: 1px; }
         .chip { width: 45px; height: 32px; background: linear-gradient(135deg, #e5c06d, #b4934a); border-radius: 6px; }
-
         .card-number { font-family: monospace; font-size: 20px; letter-spacing: 2px; font-weight: bold; margin: 15px 0; color: #fff !important; }
-        
         .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
         .v-label { font-size: 8px; opacity: 0.7; text-transform: uppercase; display: block; }
         .v-value { font-size: 14px; font-weight: bold; color: #fff !important; }
-
         .thanks-text { font-size: 11px; color: #fbbf24; font-weight: bold; margin-top: 5px; text-align: right; }
 
-        /* Modals */
+        /* Modal & Quick Select Buttons */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
-        .modal-content { background: var(--card-bg); padding: 35px; border-radius: 24px; width: 90%; max-width: 400px; border: 1px solid var(--card-border); }
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 24px; width: 90%; max-width: 420px; border: 1px solid var(--card-border); }
+        
+        .quick-select { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
+        .q-btn { padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(0,0,0,0.03); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text-dark); transition: 0.2s; }
+        .q-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        body.dark-mode .q-btn { background: rgba(255,255,255,0.05); }
 
         .btn-main { width: 100%; padding: 16px; background: #0f172a; color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
         .btn-gold { width: 100%; padding: 16px; background: var(--accent); color: #0f172a; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; }
@@ -94,7 +87,7 @@
 
     <div id="loginSection">
         <div class="login-card">
-            <i class="fas fa-crown fa-3x" style="color: var(--accent); margin-bottom: 15px;"></i>
+            <i class="fas fa-key fa-3x" style="color: var(--accent); margin-bottom: 15px;"></i>
             <h2>AGE ADMIN</h2>
             <input type="text" id="adminUser" placeholder="Username">
             <input type="password" id="adminPass" placeholder="Password">
@@ -128,9 +121,20 @@
 
     <div class="modal-overlay" id="inputModal">
         <div class="modal-content">
-            <h3>Register VIP Member</h3>
+            <h3 style="margin-bottom: 15px;">Register VIP</h3>
             <input type="text" id="mId" placeholder="Token / ID">
             <input type="text" id="mName" placeholder="Customer Name">
+            
+            <p style="font-size: 11px; margin: 10px 0 5px; font-weight: bold; opacity: 0.7;">QUICK EXPIRY SELECT:</p>
+            <div class="quick-select">
+                <button class="q-btn" onclick="setQuickDate(1)">1 Month</button>
+                <button class="q-btn" onclick="setQuickDate(2)">2 Months</button>
+                <button class="q-btn" onclick="setQuickDate(3)">3 Months</button>
+                <button class="q-btn" onclick="setQuickDate(6)">6 Months</button>
+                <button class="q-btn" onclick="setQuickDate(12)">1 Year</button>
+                <button class="q-btn" style="color:red;" onclick="document.getElementById('mDate').value=''">Clear</button>
+            </div>
+            
             <input type="date" id="mDate">
             <button class="btn-main" onclick="handleSaveData()">ACTIVATE & CREATE CARD</button>
             <button class="btn-main" style="background:#eee; color:#333;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
@@ -198,6 +202,17 @@
             document.getElementById('themeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
 
+        // Quick Date Function
+        function setQuickDate(months) {
+            let d = new Date();
+            d.setMonth(d.getMonth() + months);
+            // Format YYYY-MM-DD for input
+            let year = d.getFullYear();
+            let month = ("0" + (d.getMonth() + 1)).slice(-2);
+            let day = ("0" + d.getDate()).slice(-2);
+            document.getElementById('mDate').value = `${year}-${month}-${day}`;
+        }
+
         function handleSaveData() {
             const id = document.getElementById('mId').value.trim();
             const name = document.getElementById('mName').value.trim();
@@ -206,7 +221,8 @@
 
             db.collection("users").doc(id).set({ username: name, expiryDate: exp }, { merge: true }).then(() => {
                 document.getElementById('inputModal').style.display='none';
-                document.getElementById('vId').innerText = id.match(/.{1,4}/g).join(' ');
+                let formattedId = id.length > 4 ? id.match(/.{1,4}/g).join(' ') : id;
+                document.getElementById('vId').innerText = formattedId;
                 document.getElementById('vName').innerText = name;
                 document.getElementById('vExp').innerText = exp.split('-').reverse().join('/');
                 document.getElementById('voucherOverlay').style.display = 'flex';
@@ -214,13 +230,9 @@
         }
 
         function downloadVoucher() {
-            html2canvas(document.getElementById('voucherPrint'), {
-                scale: 3,
-                backgroundColor: null,
-                useCORS: true
-            }).then(canvas => {
+            html2canvas(document.getElementById('voucherPrint'), { scale: 3, backgroundColor: null, useCORS: true }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `VIP_CARD.png`;
+                link.download = `VIP_${document.getElementById('vName').innerText}.png`;
                 link.href = canvas.toDataURL("image/png");
                 link.click();
             });
@@ -275,7 +287,6 @@
             document.getElementById('mDate').value = date;
             document.getElementById('inputModal').style.display = 'flex';
         }
-
         window.onload = checkAuth;
     </script>
 </body>
