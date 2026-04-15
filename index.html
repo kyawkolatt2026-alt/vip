@@ -12,153 +12,70 @@
 
     <style>
         :root {
-            --primary-bg: #e0f2fe;
-            --primary-text: #0369a1;
-            --accent: #60a5fa;
-            --success-border: #bbf7d0;
-            --success-text: #166534;
-            --bg-main: #ffffff;
+            --bg-main: #0f172a; 
+            --bg-body: #f8fafc;
+            --accent: #d4af37; 
             --text-dark: #1e293b;
             --text-light: #64748b;
-            --border-light: #f1f5f9;
-            --gold: #f59e0b; /* Golden for Crown */
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --success: #22c55e;
+            --danger: #ef4444;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; }
-        body { background: var(--bg-main); color: var(--text-dark); overflow-x: hidden; }
-
-        /* Login Section */
-        #loginSection { position: fixed; inset: 0; background: var(--accent); display: flex; align-items: center; justify-content: center; z-index: 500; }
-        .login-card { background: white; padding: 40px; border-radius: 30px; width: 90%; max-width: 380px; text-align: center; box-shadow: 0 20px 25px rgba(0,0,0,0.1); }
-        .login-card h2 { margin-bottom: 25px; color: var(--accent); font-weight: 800; }
-
-        /* --- Header & Dashboard --- */
-        .header { 
-            background: var(--primary-bg); padding: 40px 20px; color: var(--primary-text); text-align: center;
-            border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; position: relative;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
+        /* Dark Mode Styles */
+        body.dark-mode {
+            --bg-body: #020617;
+            --text-dark: #f8fafc;
+            --text-light: #94a3b8;
+            --card-bg: #1e293b;
+            --card-border: #334155;
         }
-        .logout-btn { position: absolute; top: 15px; right: 20px; background: rgba(255,255,255,0.7); color: var(--primary-text); border: none; padding: 10px 18px; border-radius: 12px; cursor: pointer; font-size: 12px; font-weight: 800; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s, color 0.3s; }
+        body { background: var(--bg-body); color: var(--text-dark); }
+
+        /* Login */
+        #loginSection { position: fixed; inset: 0; background: #0f172a; display: flex; align-items: center; justify-content: center; z-index: 2000; }
+        .login-card { background: white; padding: 40px; border-radius: 24px; width: 90%; max-width: 380px; text-align: center; color: #1e293b; }
+
+        /* Header */
+        .header { background: #0f172a; padding: 50px 20px; color: white; text-align: center; position: relative; border-bottom: 2px solid var(--accent); }
+        .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
+        .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; font-size: 16px; }
 
         .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 600px; margin: 25px auto 0; }
-        .stat-card { background: rgba(255,255,255,0.8); padding: 20px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .stat-card h2 { font-size: 32px; font-weight: 900; }
-        .stat-card p { font-size: 11px; font-weight: 700; opacity: 0.7; margin-top: 2px; }
+        .stat-card { background: rgba(255,255,255,0.05); padding: 20px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); }
+        .stat-card h2 { font-size: 32px; color: var(--accent); }
 
-        /* --- Search Bar --- */
-        .search-container { max-width: 600px; margin: 30px auto 0; padding: 0 15px; }
-        .search-wrapper { position: relative; display: flex; align-items: center; }
-        .search-wrapper i { position: absolute; left: 18px; color: #94a3b8; }
-        .search-input { width: 100%; padding: 16px 16px 16px 50px; border-radius: 20px; border: 2px solid #e2e8f0; outline: none; transition: 0.3s; background: white; font-size: 15px; }
-        .search-input:focus { border-color: var(--accent); box-shadow: 0 5px 15px rgba(96, 165, 250, 0.15); }
+        /* Search */
+        .search-container { max-width: 600px; margin: -28px auto 0; padding: 0 15px; position: relative; z-index: 10; }
+        .search-input { width: 100%; padding: 18px 18px 18px 50px; border-radius: 15px; border: none; box-shadow: 0 10px 15px rgba(0,0,0,0.1); font-weight: 600; outline: none; background: var(--card-bg); color: var(--text-dark); border: 1px solid var(--card-border); }
 
-        /* --- User Grid (PC & Mobile View) --- */
-        .container { max-width: 1300px; margin: 20px auto; padding: 25px; display: grid; grid-template-columns: 1fr; gap: 25px; }
-        @media (min-width: 768px) { .container { grid-template-columns: repeat(2, 1fr); } }
-        @media (min-width: 1100px) { .container { grid-template-columns: repeat(3, 1fr); } }
+        /* User List */
+        .container { max-width: 1200px; margin: 40px auto; padding: 25px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .user-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
-        .user-card { 
-            background: white; border: 3px solid var(--success-border); border-radius: 25px; 
-            padding: 25px; transition: 0.3s; position: relative;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.02);
-        }
-        .user-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px rgba(0,0,0,0.05); }
-        .user-name { font-weight: 800; font-size: 19px; }
-        .token-badge { font-size: 10px; background: #f1f5f9; padding: 5px 10px; border-radius: 8px; color: var(--text-light); font-family: monospace; }
+        /* VIP Card Preview */
+        .vip-membership-card { width: 350px; height: 210px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 20px; color: white; display: flex; flex-direction: column; justify-content: space-between; padding: 25px; border: 1px solid rgba(212, 175, 55, 0.3); }
+
+        /* Modals */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
+        .modal-content { background: var(--card-bg); padding: 35px; border-radius: 24px; width: 90%; max-width: 400px; border: 1px solid var(--card-border); }
+
+        .btn-main { width: 100%; padding: 16px; background: #0f172a; color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
+        .btn-gold { width: 100%; padding: 16px; background: var(--accent); color: #0f172a; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; }
+        input { width: 100%; padding: 14px; margin: 10px 0; border: 1.5px solid var(--card-border); border-radius: 12px; outline: none; background: var(--card-bg); color: var(--text-dark); }
         
-        .progress-track { background: #f1f5f9; height: 12px; border-radius: 12px; overflow: hidden; margin: 18px 0; }
-        .progress-fill { height: 100%; transition: width 0.8s ease; }
-
-        .card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .btn-card { border: none; padding: 12px; border-radius: 12px; font-size: 13px; cursor: pointer; font-weight: 800; transition: 0.2s; }
-
-        /* --- Beautiful Voucher (Receipt) Style --- */
-        .success-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 300; backdrop-filter: blur(5px); }
-        .voucher-box { 
-            width: 330px; 
-            background: white; 
-            border-radius: 20px; 
-            overflow: hidden; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3); 
-            position: relative;
-            /* Zigzag bottom effect */
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-        }
-        .voucher-box::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background: linear-gradient(-135deg, white 5px, transparent 0), linear-gradient(135deg, white 5px, transparent 0);
-            background-size: 10px 15px;
-            background-repeat: repeat-x;
-        }
-
-        .v-header { 
-            background: #003049; /* Deep Blue for Premium Feel */
-            color: white; 
-            padding: 30px; 
-            text-align: center;
-            position: relative;
-        }
-        
-        /* Premium Golden Crown with Glow */
-        .crown-wrapper {
-            width: 70px;
-            height: 70px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 10px;
-            border: 2px solid rgba(255,255,255,0.2);
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
-        }
-        .crown-icon { font-size: 36px; color: var(--gold); }
-
-        .v-body { 
-            padding: 30px; 
-            background-image: radial-gradient(#e2e8f0 1px, transparent 1px); 
-            background-size: 15px 15px; 
-            background-position: center;
-        }
-        .v-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 15px; border-bottom: 1px dashed #cbd5e1; padding-bottom: 5px; }
-        .v-label { color: #64748b; font-weight: 600; }
-        .v-value { color: #0f172a; font-weight: 800; text-align: right; }
-        
-        .v-status-badge {
-            background: #d1fae5;
-            color: #065f46;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .v-footer {
-            padding: 15px 30px 25px;
-            text-align: center;
-            font-size: 11px;
-            color: #94a3b8;
-            border-top: 1px solid #f1f5f9;
-        }
-
-        /* General UI */
-        .fab { position: fixed; bottom: 35px; right: 35px; width: 65px; height: 65px; background: var(--accent); color: white; border-radius: 50%; border: none; font-size: 26px; box-shadow: 0 10px 20px rgba(96, 165, 250, 0.4); cursor: pointer; z-index: 100; transition: 0.3s; }
-        .fab:hover { transform: scale(1.1); }
-        input[type="text"], input[type="password"], input[type="date"] { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid var(--border-light); border-radius: 15px; outline: none; }
-        .btn-main { width: 100%; padding: 16px; background: var(--accent); color: white; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 16px; }
+        .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent); color: #0f172a; border-radius: 50%; border: none; font-size: 24px; cursor: pointer; box-shadow: 0 10px 15px rgba(212,175,55,0.3); }
     </style>
 </head>
 <body>
 
     <div id="loginSection">
         <div class="login-card">
-            <i class="fas fa-user-shield fa-3x" style="color: var(--accent); margin-bottom: 15px;"></i>
-            <h2>AGE Admin</h2>
+            <i class="fas fa-shield-halved fa-3x" style="color: var(--accent); margin-bottom: 15px;"></i>
+            <h2>ADMIN LOGIN</h2>
             <input type="text" id="adminUser" placeholder="Username">
             <input type="password" id="adminPass" placeholder="Password">
             <button class="btn-main" onclick="handleLogin()">LOGIN</button>
@@ -167,17 +84,21 @@
 
     <div id="mainContent" style="display: none;">
         <div class="header">
-            <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-            <h1>AGE VIP PREMIUM</h1>
-            <div class="dashboard">
-                <div class="stat-card"> <h2 id="totalCount">0</h2> <p>TOTAL USERS</p> </div>
-                <div class="stat-card"> <h2 id="activeCount">0</h2> <p>ACTIVE VIP</p> </div>
+            <div class="nav-icons">
+                <button class="icon-btn" onclick="toggleDarkMode()" id="darkBtn"><i class="fas fa-moon"></i></button>
+                <button class="icon-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i></button>
             </div>
-            <div class="search-container">
-                <div class="search-wrapper">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" class="search-input" placeholder="Search by ID or Username..." onkeyup="filterUsers()">
-                </div>
+            <h1 style="font-weight: 900; letter-spacing: 2px;">AGE <span style="color:var(--accent)">VIP</span></h1>
+            <div class="dashboard">
+                <div class="stat-card"> <h2 id="totalCount">0</h2> <p style="font-size: 10px; opacity: 0.7;">TOTAL USERS</p> </div>
+                <div class="stat-card"> <h2 id="activeCount">0</h2> <p style="font-size: 10px; opacity: 0.7;">ACTIVE VIP</p> </div>
+            </div>
+        </div>
+
+        <div class="search-container">
+            <div style="position:relative;">
+                <i class="fas fa-search" style="position:absolute; left:20px; top:20px; color:#94a3b8;"></i>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search by name or ID..." onkeyup="filterUsers()">
             </div>
         </div>
 
@@ -185,43 +106,32 @@
         <button class="fab" onclick="openInputModal()"><i class="fas fa-plus"></i></button>
     </div>
 
-    <div class="success-overlay" id="inputModal" style="z-index: 400;">
-        <div style="background:white; padding:35px; border-radius:30px; width:90%; max-width:420px;">
-            <h3 id="mTitle" style="color: var(--primary-text); font-weight: 800; margin-bottom: 15px;">Registration</h3>
-            <input type="text" id="mId" placeholder="User ID / Token">
+    <div class="modal-overlay" id="inputModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px;">Add New VIP</h3>
+            <input type="text" id="mId" placeholder="Client ID / Token">
             <input type="text" id="mName" placeholder="Customer Name">
             <input type="date" id="mDate">
-            <button class="btn-main" onclick="handleSaveData()">SAVE & GET RECEIPT</button>
-            <button onclick="document.getElementById('inputModal').style.display='none'" style="width:100%; margin-top:15px; background:none; border:none; color:gray; cursor:pointer;">Cancel</button>
+            <button class="btn-main" onclick="handleSaveData()">SAVE & CREATE CARD</button>
+            <button class="btn-main" style="background:#eee; color:#333;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
         </div>
     </div>
 
-    <div class="success-overlay" id="voucherOverlay">
-        <div style="display: flex; flex-direction: column; align-items: center; padding: 20px;">
-            <div class="voucher-box" id="voucherPrint">
-                <div class="v-header">
-                    <div class="crown-wrapper">
-                        <i class="fas fa-crown crown-icon"></i>
-                    </div>
-                    <h2 style="font-size: 20px; font-weight: 900; letter-spacing: 1px;">AGE VIP PREMIUM</h2>
-                    <p style="font-size: 10px; opacity: 0.8; letter-spacing: 2.5px; margin-top: 3px;">OFFICIAL RECEIPT</p>
+    <div class="modal-overlay" id="voucherOverlay">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+            <div class="vip-membership-card" id="voucherPrint">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-weight:900; color:var(--accent);">VIP MEMBERSHIP</div>
+                    <div style="width:40px; height:28px; background:linear-gradient(135deg, #e5c06d, #b4934a); border-radius:6px;"></div>
                 </div>
-                <div class="v-body">
-                    <div class="v-row"><span class="v-label">CLIENT ID:</span> <span class="v-value" id="vId"></span></div>
-                    <div class="v-row"><span class="v-label">CUSTOMER:</span> <span class="v-value" id="vName"></span></div>
-                    <div class="v-row"><span class="v-label">VALID UNTIL:</span> <span class="v-value" id="vExp"></span></div>
-                    <div class="v-row"><span class="v-label">STATUS:</span> <span class="v-status-badge">ACTIVE</span></div>
-                    <div class="v-row" style="border:none; margin-top: 20px;"><span class="v-label">DAYS REMAINING:</span> <span class="v-value" id="vDays" style="font-size: 18px; color: #003049;"></span></div>
-                </div>
-                <div class="v-footer">
-                    <p style="font-weight: 600;">*** Thank you for choosing AGE Service ***</p>
-                    <p id="vTime" style="margin-top: 8px;"></p>
+                <div id="vId" style="font-family:monospace; font-size:20px; font-weight:bold; letter-spacing:2px;"></div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-end;">
+                    <div><span style="font-size:8px; opacity:0.6;">NAME</span><br><span id="vName" style="font-weight:bold;"></span></div>
+                    <div style="text-align:right;"><span style="font-size:8px; opacity:0.6;">EXPIRY</span><br><span id="vExp" style="font-weight:bold; color:var(--accent);"></span></div>
                 </div>
             </div>
-            <div style="width: 330px; padding: 20px; background: #f8fafc; border-bottom-left-radius: 25px; border-bottom-right-radius: 25px; display: flex; flex-direction: column; gap: 12px; margin-top: -5px; position: relative; z-index: 10; box-shadow: 0 10px 15px rgba(0,0,0,0.1);">
-                <button onclick="downloadVoucher()" style="padding:16px; background:#16a34a; color:white; border:none; border-radius:15px; font-weight:800; cursor:pointer; font-size: 15px; transition: 0.2s;"><i class="fas fa-download" style="margin-right: 8px;"></i> SAVE IMAGE</button>
-                <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="padding:14px; background:#475569; color:white; border:none; border-radius:15px; font-weight:700; cursor:pointer; font-size: 14px;">CLOSE</button>
-            </div>
+            <button class="btn-gold" style="width:350px; margin-top:20px;" onclick="downloadVoucher()">SAVE TO GALLERY</button>
+            <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="color:white; background:none; border:none; margin-top:15px; cursor:pointer;">CLOSE PREVIEW</button>
         </div>
     </div>
 
@@ -239,7 +149,7 @@
         const db = firebase.firestore();
         let allUsers = [];
 
-        // Auth Logic
+        // Auth
         function handleLogin() {
             const u = document.getElementById('adminUser').value;
             const p = document.getElementById('adminPass').value;
@@ -254,9 +164,27 @@
             document.getElementById('loginSection').style.display = auth ? 'none' : 'flex';
             document.getElementById('mainContent').style.display = auth ? 'block' : 'none';
         }
-        window.onload = checkAuth;
 
-        // Save & Update Logic
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('#darkBtn i');
+            if(document.body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem("theme", "dark");
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem("theme", "light");
+            }
+        }
+
+        // Load Saved Theme
+        if(localStorage.getItem("theme") === "dark") {
+            document.body.classList.add('dark-mode');
+            document.querySelector('#darkBtn i').className = 'fas fa-sun';
+        }
+
+        // User Logic
         function handleSaveData() {
             const id = document.getElementById('mId').value.trim();
             const name = document.getElementById('mName').value.trim();
@@ -265,40 +193,20 @@
 
             db.collection("users").doc(id).set({ username: name, expiryDate: exp }, { merge: true }).then(() => {
                 document.getElementById('inputModal').style.display='none';
-                showVoucher(id, name, exp);
+                document.getElementById('vId').innerText = id;
+                document.getElementById('vName').innerText = name;
+                document.getElementById('vExp').innerText = exp;
+                document.getElementById('voucherOverlay').style.display = 'flex';
             });
-        }
-
-        function showVoucher(id, name, exp) {
-            const days = Math.ceil((new Date(exp) - new Date()) / 86400000);
-            document.getElementById('vId').innerText = id;
-            document.getElementById('vName').innerText = name;
-            document.getElementById('vExp').innerText = exp;
-            document.getElementById('vDays').innerText = days + " Days";
-            
-            // Format time nicely
-            const now = new Date();
-            const dateStr = now.toLocaleDateString('en-GB');
-            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('vTime').innerText = `Issued: ${dateStr} | ${timeStr}`;
-            
-            document.getElementById('voucherOverlay').style.display = 'flex';
         }
 
         function downloadVoucher() {
-            html2canvas(document.getElementById('voucherPrint'), { scale: 3, backgroundColor: null }).then(canvas => {
+            html2canvas(document.getElementById('voucherPrint'), { scale: 3 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `AGE_VOUCHER_${document.getElementById('vName').innerText}.png`;
+                link.download = `VIP_${document.getElementById('vName').innerText}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
             });
-        }
-
-        // List & Search Logic
-        function filterUsers() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allUsers.filter(u => u.id.toLowerCase().includes(term) || u.username.toLowerCase().includes(term));
-            renderUsers(filtered);
         }
 
         function renderUsers(users) {
@@ -306,33 +214,39 @@
             list.innerHTML = "";
             users.forEach(u => {
                 const days = Math.ceil((new Date(u.expiryDate) - new Date()) / 86400000);
-                const color = days > 5 ? '#16a34a' : '#ef4444';
+                const color = days > 5 ? '#22c55e' : '#ef4444';
                 list.innerHTML += `
                     <div class="user-card">
-                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                            <span class="user-name">${u.username}</span>
-                            <span class="token-badge">${u.id}</span>
+                        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                            <span style="font-weight:bold; font-size:18px;">${u.username}</span>
+                            <span style="font-size:10px; background:rgba(0,0,0,0.05); padding:4px 8px; border-radius:6px;">${u.id}</span>
                         </div>
-                        <div style="display:flex; justify-content:space-between; margin-top:15px; font-size:13px; font-weight:700;">
-                            <span style="color:var(--text-light)">Expiry: ${u.expiryDate}</span>
-                            <span style="color:${color}">${days > 0 ? days+' Days' : 'Expired'}</span>
+                        <div style="font-size:12px; color:var(--text-light); margin-bottom:8px;">
+                            Expires: ${u.expiryDate} 
+                            <span style="float:right; color:${color}; font-weight:bold;">${days > 0 ? days+' Days' : 'Expired'}</span>
                         </div>
-                        <div class="progress-track"><div class="progress-fill" style="width:${Math.max(0,(days/30)*100)}%; background:${color}"></div></div>
-                        <div class="card-actions">
-                            <button class="btn-card" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')" style="background:#eff6ff; color:#1d4ed8;"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn-card" onclick="if(confirm('Delete user?')) db.collection('users').doc('${u.id}').delete()" style="background:#fff1f2; color:#be123c;"><i class="fas fa-trash"></i> Delete</button>
+                        <div style="height:6px; background:rgba(0,0,0,0.05); border-radius:10px; overflow:hidden;">
+                            <div style="width:${Math.max(0,(days/30)*100)}%; height:100%; background:${color};"></div>
                         </div>
-                    </div>
-                `;
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px;">
+                            <button style="padding:10px; border-radius:10px; border:1px solid var(--card-border); background:none; color:var(--text-dark); cursor:pointer;" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')">Edit</button>
+                            <button style="padding:10px; border-radius:10px; border:none; background:#fee2e2; color:#be123c; cursor:pointer;" onclick="if(confirm('Delete user?')) db.collection('users').doc('${u.id}').delete()">Delete</button>
+                        </div>
+                    </div>`;
             });
+        }
+
+        function filterUsers() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allUsers.filter(u => u.id.toLowerCase().includes(term) || u.username.toLowerCase().includes(term));
+            renderUsers(filtered);
         }
 
         db.collection("users").onSnapshot(snap => {
             allUsers = []; let t = 0, a = 0;
             snap.forEach(doc => {
                 t++; const d = doc.data();
-                const days = Math.ceil((new Date(d.expiryDate) - new Date()) / 86400000);
-                if(days > 0) a++;
+                if(Math.ceil((new Date(d.expiryDate)-new Date())/86400000) > 0) a++;
                 allUsers.push({ id: doc.id, ...d });
             });
             document.getElementById('totalCount').innerText = t;
@@ -347,6 +261,8 @@
             document.getElementById('mDate').value = date;
             document.getElementById('inputModal').style.display = 'flex';
         }
+
+        window.onload = checkAuth;
     </script>
 </body>
 </html>
