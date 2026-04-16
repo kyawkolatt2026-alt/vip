@@ -35,7 +35,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.2s; }
         body { background: var(--bg-body); color: var(--text-main); }
 
-        /* Header & Dashboard */
         .header { background: var(--bg-header); padding: 40px 20px; text-align: center; color: white; border-bottom: 4px solid var(--gold); position: relative; }
         .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
         .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; }
@@ -49,8 +48,11 @@
 
         /* User Cards */
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; padding-bottom: 100px; }
-        .user-card { background: var(--bg-card); border: 2px solid var(--card-border); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .user-card { background: var(--bg-card); border: 2px solid var(--card-border); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
         
+        /* Active Status Badge */
+        .status-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+
         .card-top { display: flex; align-items: center; gap: 12px; }
         .progress-circle { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
         .progress-circle svg { transform: rotate(-90deg); width: 55px; height: 55px; }
@@ -60,7 +62,7 @@
         .progress-circle .percentage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; }
 
         .user-info { flex-grow: 1; min-width: 0; }
-        .user-name { font-weight: 800; font-size: 16px; display: block; margin-bottom: 2px; color: var(--text-main); }
+        .user-name { font-weight: 800; font-size: 16px; display: block; margin-bottom: 2px; color: var(--text-main); max-width: 80%; }
         
         .action-group { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin-top: 5px; }
         .act-btn { padding: 8px 4px; border-radius: 8px; border: none; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; }
@@ -162,7 +164,6 @@
     </div>
 
     <script>
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyB3cFSVLfpvHPeD732r-iL4Yfhi0wHEuOA",
             authDomain: "vipsystem-c301c.firebaseapp.com",
@@ -199,22 +200,19 @@
             document.getElementById('mainContent').style.display = auth ? 'block' : 'none';
         }
 
-        // Voucher ပြသခြင်း
         function showVoucher(id, name, exp) {
             document.getElementById('vId').innerText = id;
             document.getElementById('vName').innerText = name;
-            // Date format ပြောင်းခြင်း (YYYY-MM-DD to DD/MM/YYYY)
             document.getElementById('vExp').innerText = exp.split('-').reverse().join('/');
             document.getElementById('voucherOverlay').style.display = 'flex';
         }
 
-        // Data သိမ်းဆည်းခြင်း (Add/Edit)
         function handleSaveData() {
             const id = document.getElementById('mId').value.trim(), 
                   name = document.getElementById('mName').value.trim(), 
                   exp = document.getElementById('mDate').value;
             
-            if(!id || !name || !exp) return alert("အချက်အလက်အားလုံး ပြည့်စုံအောင်ဖြည့်ပါ။");
+            if(!id || !name || !exp) return alert("Fill all!");
 
             db.collection("users").doc(id).set({
                 username: name,
@@ -222,16 +220,14 @@
                 isActive: true
             }, { merge: true }).then(() => {
                 document.getElementById('inputModal').style.display='none';
-                // User အသစ် add ပြီးတာနဲ့ Voucher ကို တန်းပြခြင်း
                 showVoucher(id, name, exp);
-            }).catch(err => alert("Error saving: " + err));
+            });
         }
 
         function toggleUserStatus(id, currentStatus) {
             db.collection("users").doc(id).update({ isActive: !currentStatus });
         }
 
-        // User List ပြသခြင်း
         function renderUsers(users) {
             const list = document.getElementById('listContainer');
             list.innerHTML = "";
@@ -240,14 +236,17 @@
                 const isExpired = days <= 0;
                 const active = u.isActive !== false;
                 const color = active ? (isExpired ? '#ef4444' : '#22c55e') : '#64748b';
+                const statusText = active ? (isExpired ? 'Expired' : 'Active') : 'Blocked';
                 
-                // Progress Circle calculation
                 const stroke = 154;
                 const percent = isExpired ? 0 : Math.min(100, (days / 30) * 100);
                 const offset = stroke - (percent / 100) * stroke;
 
                 list.innerHTML += `
                     <div class="user-card" style="border-left: 5px solid ${color}">
+                        <div class="status-badge" style="background:${color}20; color:${color}; border: 1px solid ${color}40;">
+                            ${statusText}
+                        </div>
                         <div class="card-top">
                             <div class="progress-circle">
                                 <svg><circle class="bg" cx="27.5" cy="27.5" r="24.5"/><circle class="fg" cx="27.5" cy="27.5" r="24.5" style="stroke-dasharray: ${stroke}; stroke-dashoffset: ${offset}; stroke: ${color};"/></svg>
@@ -276,7 +275,6 @@
             renderUsers(filtered);
         }
 
-        // Firebase Real-time Listener
         db.collection("users").onSnapshot(snap => {
             allUsers = []; let t = 0, a = 0;
             snap.forEach(doc => {
@@ -311,3 +309,4 @@
     </script>
 </body>
 </html>
+
