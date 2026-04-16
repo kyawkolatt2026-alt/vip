@@ -54,23 +54,31 @@
         .search-input { width: 100%; padding: 15px 15px 15px 45px; border-radius: 14px; border: 2px solid var(--accent); box-shadow: 0 10px 20px rgba(0,0,0,0.2); outline: none; background: var(--bg-card); color: var(--text-main); font-weight: bold; }
 
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; padding-bottom: 100px; }
-        .user-card { background: var(--bg-card); border: 2px solid var(--card-border); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+        .user-card { background: var(--bg-card); border: 2px solid var(--card-border); border-radius: 20px; padding: 15px; display: grid; grid-template-rows: auto auto auto; gap: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
         
-        .status-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
+        .status-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; z-index: 10; }
 
-        .card-top { display: flex; align-items: center; gap: 12px; }
-        .progress-circle { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
-        .progress-circle svg { transform: rotate(-90deg); width: 55px; height: 55px; }
-        .progress-circle circle { fill: none; stroke-width: 6; stroke-linecap: round; }
+        .card-top { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; }
+        .progress-circle { position: relative; width: 65px; height: 65px; flex-shrink: 0; }
+        .progress-circle svg { transform: rotate(-90deg); width: 65px; height: 65px; }
+        .progress-circle circle { fill: none; stroke-width: 7; stroke-linecap: round; }
         .progress-circle .bg { stroke: rgba(128,128,128,0.1); }
-        .progress-circle .percentage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; }
+        .progress-circle .percentage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; }
 
         .user-info { flex-grow: 1; min-width: 0; }
-        .user-name-wrapper { display: inline-block; background: var(--name-bg); padding: 4px 12px; border-radius: 10px; margin-bottom: 4px; border: 1px solid rgba(251, 191, 36, 0.15); }
-        .user-name { font-weight: 900; font-size: 16px; color: var(--gold); }
+        .user-name-wrapper { display: inline-block; background: var(--name-bg); padding: 4px 12px; border-radius: 10px; margin-bottom: 4px; border: 1px solid rgba(251, 191, 36, 0.15); max-width: 100%; overflow: hidden; }
+        .user-name { font-weight: 900; font-size: 16px; color: var(--gold); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
         
+        /* ပြင်ဆင်လိုက်သော ID and EXP layout */
+        .user-data-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px solid var(--card-border); padding-top: 10px; }
+        .data-item { display: flex; flex-direction: column; gap: 2px; }
+        .data-label { font-size: 10px; color: var(--text-dim); font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
+        .data-value { font-size: 13px; color: var(--text-main); font-weight: 900; }
+        .data-value.id { font-family: monospace; font-size: 12px; }
+
         .action-group { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin-top: 5px; }
-        .act-btn { padding: 8px 4px; border-radius: 8px; border: none; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; }
+        .act-btn { padding: 8px 4px; border-radius: 8px; border: none; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; transition: background 0.2s; }
+        .act-btn:hover { opacity: 0.8; }
         .btn-edit { background: #e0e7ff; color: #4338ca; }
         .btn-block { background: #fee2e2; color: #b91c1c; }
         .btn-unblock { background: #dcfce7; color: #15803d; }
@@ -80,15 +88,16 @@
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
         .modal-content { background: var(--bg-card); padding: 25px; border-radius: 24px; width: 90%; max-width: 400px; border: 2px solid var(--accent); }
         
-        /* Quick Select Buttons Style */
         .quick-date-group { display: flex; gap: 8px; margin-bottom: 10px; }
-        .q-date-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-size: 11px; font-weight: bold; cursor: pointer; }
+        .q-date-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-size: 11px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         .q-date-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
 
         input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 2px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-weight: bold; }
+        input:focus { border-color: var(--accent); outline: none; }
         .btn-main { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
         
-        .fab { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--accent); color: white; border-radius: 22px; border: none; font-size: 26px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; }
+        .fab { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--accent); color: white; border-radius: 22px; border: none; font-size: 26px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; transition: transform 0.2s; }
+        .fab:hover { transform: scale(1.05); }
 
         .vip-membership-card { width: 340px; height: 200px; background: #020617; border-radius: 18px; padding: 22px; border: 2px solid var(--gold); color: white; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
         .card-inner { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
@@ -185,7 +194,6 @@
             document.getElementById('modeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
 
-        // Quick Date Function
         function addMonths(months) {
             let d = new Date();
             d.setMonth(d.getMonth() + months);
@@ -203,7 +211,7 @@
 
         function handleLogout() {
             localStorage.removeItem("ageLogin");
-            location.reload();
+            location.reload(); 
         }
 
         function checkAuth() {
@@ -249,30 +257,42 @@
                 const active = u.isActive !== false;
                 const color = active ? (isExpired ? '#ef4444' : '#22c55e') : '#64748b';
                 const statusText = active ? (isExpired ? 'Expired' : 'Active') : 'Blocked';
-                const stroke = 154;
+                const stroke = 188.5; // Circle circumference for r=30
                 const percent = isExpired ? 0 : Math.min(100, (days / 30) * 100);
                 const offset = stroke - (percent / 100) * stroke;
 
                 list.innerHTML += `
                     <div class="user-card" style="border-left: 5px solid ${color}">
                         <div class="status-badge" style="background:${color}20; color:${color}; border: 1px solid ${color}40;">${statusText}</div>
+                        
                         <div class="card-top">
                             <div class="progress-circle">
-                                <svg><circle class="bg" cx="27.5" cy="27.5" r="24.5"/><circle class="fg" cx="27.5" cy="27.5" r="24.5" style="stroke-dasharray: ${stroke}; stroke-dashoffset: ${offset}; stroke: ${color};"/></svg>
+                                <svg><circle class="bg" cx="32.5" cy="32.5" r="30"/><circle class="fg" cx="32.5" cy="32.5" r="30" style="stroke-dasharray: ${stroke}; stroke-dashoffset: ${offset}; stroke: ${color};"/></svg>
                                 <div class="percentage" style="color:${color}">${isExpired ? 'EXP' : days + 'D'}</div>
                             </div>
                             <div class="user-info">
                                 <div class="user-name-wrapper">
                                     <span class="user-name">${u.username}</span>
                                 </div>
-                                <div style="font-size: 10px; color: var(--text-dim); font-weight: bold;">ID: ${u.id} | EXP: ${u.expiryDate}</div>
                             </div>
                         </div>
+
+                        <div class="user-data-wrapper">
+                            <div class="data-item">
+                                <span class="data-label">Account ID</span>
+                                <span class="data-value id">${u.id}</span>
+                            </div>
+                            <div class="data-item">
+                                <span class="data-label">Expiry Date</span>
+                                <span class="data-value">${u.expiryDate}</span>
+                            </div>
+                        </div>
+
                         <div class="action-group">
-                            <button class="act-btn btn-edit" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')">Edit</button>
-                            <button class="act-btn ${active ? 'btn-block' : 'btn-unblock'}" onclick="toggleUserStatus('${u.id}', ${active})">${active ? 'Block' : 'Active'}</button>
-                            <button class="act-btn btn-card" onclick="showVoucher('${u.id}','${u.username}','${u.expiryDate}')">Card</button>
-                            <button class="act-btn btn-delete" onclick="if(confirm('Delete?')) db.collection('users').doc('${u.id}').delete()">Del</button>
+                            <button class="act-btn btn-edit" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="act-btn ${active ? 'btn-block' : 'btn-unblock'}" onclick="toggleUserStatus('${u.id}', ${active})"><i class="fas fa-${active ? 'ban' : 'check'}"></i> ${active ? 'Block' : 'Active'}</button>
+                            <button class="act-btn btn-card" onclick="showVoucher('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-id-card"></i> Card</button>
+                            <button class="act-btn btn-delete" onclick="if(confirm('Delete user?')) db.collection('users').doc('${u.id}').delete()"><i class="fas fa-trash"></i> Del</button>
                         </div>
                     </div>`;
             });
