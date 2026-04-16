@@ -31,12 +31,12 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg-body); color: var(--text-dark); }
+        body { background: var(--bg-body); color: var(--text-dark); transition: 0.3s; }
 
         #loginSection { position: fixed; inset: 0; background: #0f172a; display: flex; align-items: center; justify-content: center; z-index: 2000; }
-        .login-card { background: white; padding: 40px; border-radius: 24px; width: 90%; max-width: 380px; text-align: center; color: #333; }
+        .login-card { background: white; padding: 40px; border-radius: 24px; width: 90%; max-width: 380px; text-align: center; color: #333; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.3); }
 
-        .header { background: #0f172a; padding: 50px 20px; color: white; text-align: center; position: relative; }
+        .header { background: #0f172a; padding: 50px 20px; color: white; text-align: center; position: relative; border-bottom: 4px solid var(--accent); }
         .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
         .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; }
 
@@ -48,39 +48,32 @@
         .search-input { width: 100%; padding: 18px 18px 18px 50px; border-radius: 15px; border: none; box-shadow: 0 10px 15px rgba(0,0,0,0.1); font-weight: 600; outline: none; background: var(--card-bg); color: var(--text-dark); border: 1px solid var(--card-border); }
 
         .container { max-width: 1200px; margin: 40px auto; padding: 25px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding-bottom: 100px; }
-        .user-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .user-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
+        .user-card:hover { transform: translateY(-5px); }
 
-        /* VIP Card Preview Styling */
-        .card-wrapper { padding: 10px; background: transparent; }
         .vip-membership-card { 
             width: 350px; height: 210px; background: #0f172a; 
             border-radius: 20px; position: relative; overflow: hidden; 
             color: white !important; display: flex; flex-direction: column; 
             justify-content: space-between; padding: 25px; border: 2px solid #d4af37;
         }
-        .card-header { display: flex; justify-content: space-between; align-items: center; }
         .card-title { font-weight: 900; font-size: 16px; color: #fbbf24; letter-spacing: 1px; }
         .chip { width: 45px; height: 32px; background: linear-gradient(135deg, #e5c06d, #b4934a); border-radius: 6px; }
         .card-number { font-family: monospace; font-size: 20px; letter-spacing: 2px; font-weight: bold; margin: 15px 0; color: #fff !important; }
-        .card-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
-        .v-label { font-size: 8px; opacity: 0.7; text-transform: uppercase; display: block; }
         .v-value { font-size: 14px; font-weight: bold; color: #fff !important; }
-        .thanks-text { font-size: 11px; color: #fbbf24; font-weight: bold; margin-top: 5px; text-align: right; }
 
-        /* Modal & Quick Select Buttons */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
         .modal-content { background: var(--card-bg); padding: 30px; border-radius: 24px; width: 90%; max-width: 420px; border: 1px solid var(--card-border); }
         
         .quick-select { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px; }
-        .q-btn { padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(0,0,0,0.03); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text-dark); transition: 0.2s; }
-        .q-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-        body.dark-mode .q-btn { background: rgba(255,255,255,0.05); }
+        .q-btn { padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: rgba(0,0,0,0.03); cursor: pointer; font-size: 12px; font-weight: 600; color: var(--text-dark); }
 
         .btn-main { width: 100%; padding: 16px; background: #0f172a; color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
         .btn-gold { width: 100%; padding: 16px; background: var(--accent); color: #0f172a; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; }
         input { width: 100%; padding: 14px; margin: 10px 0; border: 1.5px solid var(--card-border); border-radius: 12px; outline: none; background: var(--card-bg); color: var(--text-dark); }
         
         .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: var(--accent); color: #0f172a; border-radius: 50%; border: none; font-size: 24px; cursor: pointer; box-shadow: 0 10px 15px rgba(212,175,55,0.3); }
+        .status-badge { font-size: 10px; padding: 2px 8px; border-radius: 20px; font-weight: bold; margin-left: 5px; }
     </style>
 </head>
 <body>
@@ -111,7 +104,7 @@
         <div class="search-container">
             <div style="position:relative;">
                 <i class="fas fa-search" style="position:absolute; left:20px; top:20px; color:#94a3b8;"></i>
-                <input type="text" id="searchInput" class="search-input" placeholder="Search users..." onkeyup="filterUsers()">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search tokens or names..." onkeyup="filterUsers()">
             </div>
         </div>
 
@@ -145,20 +138,20 @@
         <div style="display: flex; flex-direction: column; align-items: center;">
             <div class="card-wrapper">
                 <div class="vip-membership-card" id="voucherPrint">
-                    <div class="card-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div class="card-title"><i class="fas fa-crown"></i> VIP MEMBERSHIP</div>
                         <div class="chip"></div>
                     </div>
                     <div id="vId" class="card-number">0000 0000 0000</div>
-                    <div class="card-bottom">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
                         <div>
-                            <span class="v-label">MEMBER NAME</span>
+                            <span style="font-size: 8px; opacity: 0.7; text-transform: uppercase;">MEMBER NAME</span><br>
                             <span id="vName" class="v-value">Customer Name</span>
                         </div>
                         <div style="text-align: right;">
-                            <span class="v-label">EXPIRY DATE</span>
+                            <span style="font-size: 8px; opacity: 0.7; text-transform: uppercase;">EXPIRY DATE</span><br>
                             <span id="vExp" class="v-value" style="color:#fbbf24 !important;">01/01/2026</span>
-                            <div class="thanks-text">ကျေးဇူးတင်ပါတယ်</div>
+                            <div style="font-size: 11px; color: #fbbf24; font-weight: bold; margin-top: 5px;">ကျေးဇူးတင်ပါတယ်</div>
                         </div>
                     </div>
                 </div>
@@ -202,30 +195,40 @@
             document.getElementById('themeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
 
-        // Quick Date Function
         function setQuickDate(months) {
             let d = new Date();
             d.setMonth(d.getMonth() + months);
-            // Format YYYY-MM-DD for input
             let year = d.getFullYear();
             let month = ("0" + (d.getMonth() + 1)).slice(-2);
             let day = ("0" + d.getDate()).slice(-2);
             document.getElementById('mDate').value = `${year}-${month}-${day}`;
         }
 
+        // ပြင်ဆင်ထားသော Save Function
         function handleSaveData() {
             const id = document.getElementById('mId').value.trim();
             const name = document.getElementById('mName').value.trim();
             const exp = document.getElementById('mDate').value;
             if(!id || !name || !exp) return alert("အချက်အလက်ပြည့်စုံအောင်ဖြည့်ပါ။");
 
-            db.collection("users").doc(id).set({ username: name, expiryDate: exp }, { merge: true }).then(() => {
+            db.collection("users").doc(id).set({ 
+                username: name, 
+                expiryDate: exp,
+                isActive: true // User App မှာ ပွင့်သွားစေရန်
+            }, { merge: true }).then(() => {
                 document.getElementById('inputModal').style.display='none';
                 let formattedId = id.length > 4 ? id.match(/.{1,4}/g).join(' ') : id;
                 document.getElementById('vId').innerText = formattedId;
                 document.getElementById('vName').innerText = name;
                 document.getElementById('vExp').innerText = exp.split('-').reverse().join('/');
                 document.getElementById('voucherOverlay').style.display = 'flex';
+            });
+        }
+
+        // ပိတ်/ဖွင့် လုပ်ရန် Function
+        function toggleUserStatus(id, currentStatus) {
+            db.collection("users").doc(id).update({
+                isActive: !currentStatus
             });
         }
 
@@ -243,20 +246,28 @@
             list.innerHTML = "";
             users.forEach(u => {
                 const days = Math.ceil((new Date(u.expiryDate) - new Date()) / 86400000);
-                const color = days > 5 ? '#22c55e' : '#ef4444';
+                const isExpired = days <= 0;
+                const active = u.isActive !== false; // undefined ဖြစ်နေရင်လည်း true ဟုယူမည်
+                
+                const statusText = active ? (isExpired ? 'EXPIRED' : 'ACTIVE') : 'BLOCKED';
+                const statusColor = active ? (isExpired ? '#ef4444' : '#22c55e') : '#94a3b8';
+                
                 list.innerHTML += `
-                    <div class="user-card">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                            <span style="font-weight:bold;">${u.username}</span>
-                            <span style="font-size:10px; opacity:0.6;">${u.id}</span>
+                    <div class="user-card" style="border-left: 6px solid ${active ? (isExpired ? '#ef4444' : '#22c55e') : '#475569'}">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                            <span style="font-weight:bold;">${u.username} <span class="status-badge" style="background:${statusColor}; color:white;">${statusText}</span></span>
+                            <span style="font-size:10px; opacity:0.6;">ID: ${u.id}</span>
                         </div>
-                        <div style="font-size:12px; color:var(--text-light);">Exp: ${u.expiryDate} <span style="float:right; color:${color}">${days > 0 ? days+' Days' : 'Expired'}</span></div>
-                        <div style="height:6px; background:rgba(0,0,0,0.05); border-radius:10px; margin-top:10px; overflow:hidden;">
-                            <div style="width:${Math.max(0,(days/30)*100)}%; height:100%; background:${color};"></div>
-                        </div>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:15px;">
-                            <button style="padding:8px; border-radius:8px; border:1px solid #ddd; background:none; color:inherit; cursor:pointer;" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')">Edit</button>
-                            <button style="padding:8px; border-radius:8px; border:none; background:#fee2e2; color:#be123c; cursor:pointer;" onclick="if(confirm('Delete?')) db.collection('users').doc('${u.id}').delete()">Delete</button>
+                        <div style="font-size:12px; color:var(--text-light);">Exp: ${u.expiryDate} <span style="float:right; font-weight:bold; color:${isExpired ? '#ef4444' : '#22c55e'}">${isExpired ? '0' : days} Days Left</span></div>
+                        
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:20px;">
+                            <button style="padding:10px; border-radius:10px; border:1px solid #ddd; background:none; color:inherit; cursor:pointer; font-size:11px;" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-edit"></i> Edit</button>
+                            
+                            <button style="padding:10px; border-radius:10px; border:none; background:${active ? '#fee2e2' : '#dcfce7'}; color:${active ? '#be123c' : '#15803d'}; cursor:pointer; font-size:11px; font-weight:bold;" onclick="toggleUserStatus('${u.id}', ${active})">
+                                <i class="fas fa-${active ? 'ban' : 'check-circle'}"></i> ${active ? 'Block' : 'Unblock'}
+                            </button>
+                            
+                            <button style="padding:10px; border-radius:10px; border:none; background:#0f172a; color:white; cursor:pointer; font-size:11px;" onclick="if(confirm('Delete user?')) db.collection('users').doc('${u.id}').delete()"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>`;
             });
@@ -272,7 +283,9 @@
             allUsers = []; let t = 0, a = 0;
             snap.forEach(doc => {
                 t++; const d = doc.data();
-                if(Math.ceil((new Date(d.expiryDate)-new Date())/86400000) > 0) a++;
+                const active = d.isActive !== false;
+                const days = Math.ceil((new Date(d.expiryDate)-new Date())/86400000);
+                if(active && days > 0) a++;
                 allUsers.push({ id: doc.id, ...d });
             });
             document.getElementById('totalCount').innerText = t;
