@@ -20,6 +20,8 @@
             --accent: #4f46e5;
             --gold: #fbbf24;
             --card-border: #cbd5e1;
+            /* နာမည်နောက်ခံအရောင် (Light Mode) */
+            --name-bg: rgba(79, 70, 229, 0.08); 
         }
 
         body.dark-mode {
@@ -30,10 +32,24 @@
             --text-dim: #94a3b8;
             --accent: #818cf8;
             --card-border: #334155;
+            /* နာမည်နောက်ခံအရောင် (Dark Mode) */
+            --name-bg: rgba(251, 191, 36, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.2s; }
         body { background: var(--bg-body); color: var(--text-main); }
+
+        /* Login Layout Fix for Tablet/PC */
+        #loginSection { 
+            position: fixed;
+            inset: 0;
+            display: none; /* JS will change to flex */
+            align-items: center; 
+            justify-content: center; 
+            background: var(--bg-body);
+            z-index: 9999;
+            padding: 20px;
+        }
 
         .header { background: var(--bg-header); padding: 40px 20px; text-align: center; color: white; border-bottom: 4px solid var(--gold); position: relative; }
         .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
@@ -50,7 +66,6 @@
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; padding-bottom: 100px; }
         .user-card { background: var(--bg-card); border: 2px solid var(--card-border); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
         
-        /* Active Status Badge */
         .status-badge { position: absolute; top: 10px; right: 10px; padding: 4px 10px; border-radius: 10px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .card-top { display: flex; align-items: center; gap: 12px; }
@@ -62,7 +77,12 @@
         .progress-circle .percentage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; }
 
         .user-info { flex-grow: 1; min-width: 0; }
-        .user-name { font-weight: 800; font-size: 16px; display: block; margin-bottom: 2px; color: var(--text-main); max-width: 80%; }
+        
+        /* ပြင်ဆင်လိုက်သော နာမည်ပုံစံ (Name Badge) */
+        .user-name-wrapper { display: inline-block; background: var(--name-bg); padding: 5px 12px; border-radius: 12px; margin-bottom: 4px; border: 1px solid rgba(251, 191, 36, 0.1); }
+        .user-name { font-weight: 900; font-size: 17px; color: var(--gold); text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        body.dark-mode .user-name { color: var(--gold); } /* Dark mode တွင်လည်း ရွှေရောင်အတိုင်းထားသည် */
+        body:not(.dark-mode) .user-name { color: var(--accent); } /* Light mode တွင် accent color သုံးသည် */
         
         .action-group { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin-top: 5px; }
         .act-btn { padding: 8px 4px; border-radius: 8px; border: none; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; }
@@ -76,16 +96,11 @@
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
         .modal-content { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; border: 2px solid var(--accent); position: relative; }
         
-        .quick-select { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-        .q-btn { padding: 8px; background: var(--bg-body); border: 1px solid var(--card-border); border-radius: 8px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; }
-        .q-btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
-
         input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 2px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-weight: bold; }
         .btn-main { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
         
         .fab { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--accent); color: white; border-radius: 22px; border: none; font-size: 26px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; }
 
-        /* VIP Card Preview Design */
         .vip-membership-card { width: 340px; height: 200px; background: #020617; border-radius: 18px; padding: 22px; border: 2px solid var(--gold); color: white; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
         .card-inner { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
         .vip-membership-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%); z-index: 1; }
@@ -93,8 +108,8 @@
 </head>
 <body class="dark-mode">
 
-    <div id="loginSection" style="display: none;">
-        <div class="login-card" style="background: var(--bg-card); padding: 40px; border-radius: 24px; border: 2px solid var(--accent); text-align: center; width: 90%; max-width: 380px;">
+    <div id="loginSection">
+        <div class="login-card" style="background: var(--bg-card); padding: 40px; border-radius: 24px; border: 2px solid var(--accent); text-align: center; width: 100%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
             <h2 style="color:var(--accent); margin-bottom: 20px; font-weight: 900;">AGE ADMIN</h2>
             <input type="text" id="adminUser" placeholder="Username">
             <input type="password" id="adminPass" placeholder="Password">
@@ -102,7 +117,7 @@
         </div>
     </div>
 
-    <div id="mainContent">
+    <div id="mainContent" style="display: none;">
         <div class="header">
             <div class="nav-icons">
                 <button class="icon-btn" onclick="toggleMode()"><i id="modeIcon" class="fas fa-sun"></i></button>
@@ -129,15 +144,7 @@
             <h3 style="margin-bottom: 15px; font-weight: 900; color: var(--accent);">REGISTER LICENSE</h3>
             <input type="text" id="mId" placeholder="Account ID / Token">
             <input type="text" id="mName" placeholder="Customer Name">
-            
-            <p style="font-size: 11px; margin-bottom: 5px; font-weight: bold; opacity: 0.7;">QUICK EXPIRY:</p>
-            <div class="quick-select">
-                <button class="q-btn" onclick="setQuickDate(1)">1 Month</button>
-                <button class="q-btn" onclick="setQuickDate(2)">2 Months</button>
-                <button class="q-btn" onclick="setQuickDate(12)">1 Year</button>
-            </div>
             <input type="date" id="mDate">
-            
             <button class="btn-main" onclick="handleSaveData()">ACTIVATE VIP</button>
             <button class="btn-main" style="background:#64748b; margin-top: 5px;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
         </div>
@@ -151,7 +158,7 @@
                         <div style="font-weight: 900; color: var(--gold); font-size: 18px;"><i class="fas fa-crown"></i> AGE VIP</div>
                         <div style="width: 40px; height: 30px; background: linear-gradient(135deg, #fbbf24, #d97706); border-radius: 6px;"></div>
                     </div>
-                    <div id="vId" style="font-family: monospace; font-size: 22px; letter-spacing: 2.5px; font-weight: bold; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">0000 0000 0000</div>
+                    <div id="vId" style="font-family: monospace; font-size: 22px; letter-spacing: 2.5px; font-weight: bold; color: #fff;">0000 0000 0000</div>
                     <div style="display: flex; justify-content: space-between; align-items: flex-end;">
                         <div><span style="font-size: 8px; opacity: 0.6;">MEMBER NAME</span><br><span id="vName" style="font-weight: bold; font-size: 15px; text-transform: uppercase;">USER NAME</span></div>
                         <div style="text-align: right;"><span style="font-size: 8px; opacity: 0.6;">EXPIRY DATE</span><br><span id="vExp" style="font-weight: bold; color: var(--gold); font-size: 14px;">00/00/0000</span></div>
@@ -159,7 +166,7 @@
                 </div>
             </div>
             <button class="btn-main" style="width:340px; margin-top:15px; background: var(--gold); color: #000;" onclick="downloadVoucher()">DOWNLOAD CARD</button>
-            <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="color:white; margin-top:15px; background:none; border:none; opacity:0.6; cursor:pointer;">CLOSE PREVIEW</button>
+            <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="color:white; margin-top:15px; background:none; border:none; opacity:0.6; cursor:pointer;">CLOSE</button>
         </div>
     </div>
 
@@ -182,22 +189,32 @@
             document.getElementById('modeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
 
-        function setQuickDate(months) {
-            let d = new Date();
-            d.setMonth(d.getMonth() + months);
-            document.getElementById('mDate').value = d.toISOString().split('T')[0];
+        // Login Logic with Fixes
+        function handleLogin() {
+            const user = document.getElementById('adminUser').value;
+            const pass = document.getElementById('adminPass').value;
+            if(user === "AGEVPN" && pass === "1234567") {
+                localStorage.setItem("ageLogin", "true");
+                checkAuth();
+            } else {
+                alert("Incorrect Credentials!");
+            }
         }
 
-        function handleLogin() {
-            if(document.getElementById('adminUser').value === "AGEVPN" && document.getElementById('adminPass').value === "1234567") {
-                localStorage.setItem("ageLogin", "true"); checkAuth();
-            } else alert("Error Login!");
+        function handleLogout() {
+            localStorage.removeItem("ageLogin");
+            location.reload(); // Refresh to clean state
         }
-        function handleLogout() { localStorage.removeItem("ageLogin"); checkAuth(); }
+
         function checkAuth() {
             const auth = localStorage.getItem("ageLogin");
-            document.getElementById('loginSection').style.display = auth ? 'none' : 'flex';
-            document.getElementById('mainContent').style.display = auth ? 'block' : 'none';
+            if (auth === "true") {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            } else {
+                document.getElementById('loginSection').style.display = 'flex';
+                document.getElementById('mainContent').style.display = 'none';
+            }
         }
 
         function showVoucher(id, name, exp) {
@@ -211,14 +228,9 @@
             const id = document.getElementById('mId').value.trim(), 
                   name = document.getElementById('mName').value.trim(), 
                   exp = document.getElementById('mDate').value;
-            
             if(!id || !name || !exp) return alert("Fill all!");
-
-            db.collection("users").doc(id).set({
-                username: name,
-                expiryDate: exp,
-                isActive: true
-            }, { merge: true }).then(() => {
+            db.collection("users").doc(id).set({ username: name, expiryDate: exp, isActive: true }, { merge: true })
+            .then(() => {
                 document.getElementById('inputModal').style.display='none';
                 showVoucher(id, name, exp);
             });
@@ -237,33 +249,30 @@
                 const active = u.isActive !== false;
                 const color = active ? (isExpired ? '#ef4444' : '#22c55e') : '#64748b';
                 const statusText = active ? (isExpired ? 'Expired' : 'Active') : 'Blocked';
-                
                 const stroke = 154;
                 const percent = isExpired ? 0 : Math.min(100, (days / 30) * 100);
                 const offset = stroke - (percent / 100) * stroke;
 
                 list.innerHTML += `
                     <div class="user-card" style="border-left: 5px solid ${color}">
-                        <div class="status-badge" style="background:${color}20; color:${color}; border: 1px solid ${color}40;">
-                            ${statusText}
-                        </div>
+                        <div class="status-badge" style="background:${color}20; color:${color}; border: 1px solid ${color}40;">${statusText}</div>
                         <div class="card-top">
                             <div class="progress-circle">
                                 <svg><circle class="bg" cx="27.5" cy="27.5" r="24.5"/><circle class="fg" cx="27.5" cy="27.5" r="24.5" style="stroke-dasharray: ${stroke}; stroke-dashoffset: ${offset}; stroke: ${color};"/></svg>
                                 <div class="percentage" style="color:${color}">${isExpired ? 'EXP' : days + 'D'}</div>
                             </div>
                             <div class="user-info">
-                                <span class="user-name">${u.username}</span>
+                                <div class="user-name-wrapper">
+                                    <span class="user-name">${u.username}</span>
+                                </div>
                                 <div style="font-size: 10px; color: var(--text-dim); font-weight: bold;">ID: ${u.id} | EXP: ${u.expiryDate}</div>
                             </div>
                         </div>
                         <div class="action-group">
-                            <button class="act-btn btn-edit" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="act-btn ${active ? 'btn-block' : 'btn-unblock'}" onclick="toggleUserStatus('${u.id}', ${active})">
-                                <i class="fas fa-${active ? 'ban' : 'check'}"></i> ${active ? 'Block' : 'Active'}
-                            </button>
-                            <button class="act-btn btn-card" onclick="showVoucher('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-id-card"></i> Card</button>
-                            <button class="act-btn btn-delete" onclick="if(confirm('Delete user?')) db.collection('users').doc('${u.id}').delete()"><i class="fas fa-trash"></i> Del</button>
+                            <button class="act-btn btn-edit" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')">Edit</button>
+                            <button class="act-btn ${active ? 'btn-block' : 'btn-unblock'}" onclick="toggleUserStatus('${u.id}', ${active})">${active ? 'Block' : 'Active'}</button>
+                            <button class="act-btn btn-card" onclick="showVoucher('${u.id}','${u.username}','${u.expiryDate}')">Card</button>
+                            <button class="act-btn btn-delete" onclick="if(confirm('Delete?')) db.collection('users').doc('${u.id}').delete()">Del</button>
                         </div>
                     </div>`;
             });
@@ -278,8 +287,7 @@
         db.collection("users").onSnapshot(snap => {
             allUsers = []; let t = 0, a = 0;
             snap.forEach(doc => {
-                t++;
-                const d = doc.data();
+                t++; const d = doc.data();
                 if(d.isActive && (new Date(d.expiryDate) > new Date())) a++;
                 allUsers.push({ id: doc.id, ...d });
             });
@@ -300,8 +308,7 @@
             html2canvas(document.getElementById('voucherPrint'), { scale: 3 }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = `AGE_VIP_${document.getElementById('vName').innerText}.png`;
-                link.href = canvas.toDataURL();
-                link.click();
+                link.href = canvas.toDataURL(); link.click();
             });
         }
 
@@ -309,4 +316,3 @@
     </script>
 </body>
 </html>
-
