@@ -20,7 +20,6 @@
             --accent: #4f46e5;
             --gold: #fbbf24;
             --card-border: #cbd5e1;
-            /* နာမည်နောက်ခံအရောင် (Light Mode) */
             --name-bg: rgba(79, 70, 229, 0.08); 
         }
 
@@ -32,23 +31,15 @@
             --text-dim: #94a3b8;
             --accent: #818cf8;
             --card-border: #334155;
-            /* နာမည်နောက်ခံအရောင် (Dark Mode) */
             --name-bg: rgba(251, 191, 36, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.2s; }
         body { background: var(--bg-body); color: var(--text-main); }
 
-        /* Login Layout Fix for Tablet/PC */
         #loginSection { 
-            position: fixed;
-            inset: 0;
-            display: none; /* JS will change to flex */
-            align-items: center; 
-            justify-content: center; 
-            background: var(--bg-body);
-            z-index: 9999;
-            padding: 20px;
+            position: fixed; inset: 0; display: none; align-items: center; justify-content: center; 
+            background: var(--bg-body); z-index: 9999; padding: 20px;
         }
 
         .header { background: var(--bg-header); padding: 40px 20px; text-align: center; color: white; border-bottom: 4px solid var(--gold); position: relative; }
@@ -62,7 +53,6 @@
         .search-container { max-width: 500px; margin: -25px auto 0; padding: 0 15px; position: relative; z-index: 10; }
         .search-input { width: 100%; padding: 15px 15px 15px 45px; border-radius: 14px; border: 2px solid var(--accent); box-shadow: 0 10px 20px rgba(0,0,0,0.2); outline: none; background: var(--bg-card); color: var(--text-main); font-weight: bold; }
 
-        /* User Cards */
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; padding-bottom: 100px; }
         .user-card { background: var(--bg-card); border: 2px solid var(--card-border); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
         
@@ -73,16 +63,11 @@
         .progress-circle svg { transform: rotate(-90deg); width: 55px; height: 55px; }
         .progress-circle circle { fill: none; stroke-width: 6; stroke-linecap: round; }
         .progress-circle .bg { stroke: rgba(128,128,128,0.1); }
-        .progress-circle .fg { transition: 0.5s ease; }
         .progress-circle .percentage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; }
 
         .user-info { flex-grow: 1; min-width: 0; }
-        
-        /* ပြင်ဆင်လိုက်သော နာမည်ပုံစံ (Name Badge) */
-        .user-name-wrapper { display: inline-block; background: var(--name-bg); padding: 5px 12px; border-radius: 12px; margin-bottom: 4px; border: 1px solid rgba(251, 191, 36, 0.1); }
-        .user-name { font-weight: 900; font-size: 17px; color: var(--gold); text-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        body.dark-mode .user-name { color: var(--gold); } /* Dark mode တွင်လည်း ရွှေရောင်အတိုင်းထားသည် */
-        body:not(.dark-mode) .user-name { color: var(--accent); } /* Light mode တွင် accent color သုံးသည် */
+        .user-name-wrapper { display: inline-block; background: var(--name-bg); padding: 4px 12px; border-radius: 10px; margin-bottom: 4px; border: 1px solid rgba(251, 191, 36, 0.15); }
+        .user-name { font-weight: 900; font-size: 16px; color: var(--gold); }
         
         .action-group { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin-top: 5px; }
         .act-btn { padding: 8px 4px; border-radius: 8px; border: none; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; }
@@ -92,10 +77,14 @@
         .btn-card { background: #fef3c7; color: #92400e; }
         .btn-delete { background: #f1f5f9; color: #475569; }
 
-        /* Modals & Inputs */
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
-        .modal-content { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; border: 2px solid var(--accent); position: relative; }
+        .modal-content { background: var(--bg-card); padding: 25px; border-radius: 24px; width: 90%; max-width: 400px; border: 2px solid var(--accent); }
         
+        /* Quick Select Buttons Style */
+        .quick-date-group { display: flex; gap: 8px; margin-bottom: 10px; }
+        .q-date-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-size: 11px; font-weight: bold; cursor: pointer; }
+        .q-date-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+
         input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 2px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-weight: bold; }
         .btn-main { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
         
@@ -103,13 +92,12 @@
 
         .vip-membership-card { width: 340px; height: 200px; background: #020617; border-radius: 18px; padding: 22px; border: 2px solid var(--gold); color: white; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
         .card-inner { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
-        .vip-membership-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%); z-index: 1; }
     </style>
 </head>
 <body class="dark-mode">
 
     <div id="loginSection">
-        <div class="login-card" style="background: var(--bg-card); padding: 40px; border-radius: 24px; border: 2px solid var(--accent); text-align: center; width: 100%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+        <div class="login-card" style="background: var(--bg-card); padding: 40px; border-radius: 24px; border: 2px solid var(--accent); text-align: center; width: 100%; max-width: 380px;">
             <h2 style="color:var(--accent); margin-bottom: 20px; font-weight: 900;">AGE ADMIN</h2>
             <input type="text" id="adminUser" placeholder="Username">
             <input type="password" id="adminPass" placeholder="Password">
@@ -144,7 +132,15 @@
             <h3 style="margin-bottom: 15px; font-weight: 900; color: var(--accent);">REGISTER LICENSE</h3>
             <input type="text" id="mId" placeholder="Account ID / Token">
             <input type="text" id="mName" placeholder="Customer Name">
+            
+            <p style="font-size: 11px; font-weight: bold; margin-bottom: 5px; opacity: 0.7;">SELECT DURATION:</p>
+            <div class="quick-date-group">
+                <button class="q-date-btn" onclick="addMonths(1)">1 Month</button>
+                <button class="q-date-btn" onclick="addMonths(2)">2 Months</button>
+                <button class="q-date-btn" onclick="addMonths(12)">1 Year</button>
+            </div>
             <input type="date" id="mDate">
+            
             <button class="btn-main" onclick="handleSaveData()">ACTIVATE VIP</button>
             <button class="btn-main" style="background:#64748b; margin-top: 5px;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
         </div>
@@ -189,21 +185,25 @@
             document.getElementById('modeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
 
-        // Login Logic with Fixes
+        // Quick Date Function
+        function addMonths(months) {
+            let d = new Date();
+            d.setMonth(d.getMonth() + months);
+            document.getElementById('mDate').value = d.toISOString().split('T')[0];
+        }
+
         function handleLogin() {
             const user = document.getElementById('adminUser').value;
             const pass = document.getElementById('adminPass').value;
             if(user === "AGEVPN" && pass === "1234567") {
                 localStorage.setItem("ageLogin", "true");
                 checkAuth();
-            } else {
-                alert("Incorrect Credentials!");
-            }
+            } else alert("Incorrect Credentials!");
         }
 
         function handleLogout() {
             localStorage.removeItem("ageLogin");
-            location.reload(); // Refresh to clean state
+            location.reload();
         }
 
         function checkAuth() {
