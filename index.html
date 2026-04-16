@@ -11,79 +11,88 @@
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
     <style>
-        /* CSS Variables for Dynamic Colors */
         :root {
-            --bg-body: #f1f5f9;
+            --bg-body: #f8fafc;
             --bg-card: #ffffff;
-            --bg-header: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            --text-main: #0f172a;
+            --bg-header: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            --text-main: #1e293b;
             --text-dim: #64748b;
-            --accent: #6366f1;
-            --gold: #f59e0b;
-            --card-border: #e2e8f0;
+            --accent: #4f46e5;
+            --gold: #fbbf24;
+            --card-border: #cbd5e1;
         }
 
-        /* Dark Mode Colors */
         body.dark-mode {
             --bg-body: #020617;
             --bg-card: #0f172a;
-            --bg-header: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-            --text-main: #f8fafc;
+            --bg-header: linear-gradient(135deg, #000000 0%, #1e1b4b 100%);
+            --text-main: #ffffff;
             --text-dim: #94a3b8;
             --accent: #818cf8;
-            --card-border: #1e293b;
+            --card-border: #334155;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: background 0.3s, color 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; transition: 0.2s; }
         body { background: var(--bg-body); color: var(--text-main); }
 
-        /* Login */
-        #loginSection { position: fixed; inset: 0; background: #020617; display: flex; align-items: center; justify-content: center; z-index: 2000; }
-        .login-card { background: var(--bg-card); padding: 40px; border-radius: 24px; width: 90%; max-width: 380px; text-align: center; border: 1px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-
-        /* Header Area */
-        .header { background: var(--bg-header); padding: 40px 20px; text-align: center; position: relative; border-bottom: 3px solid rgba(255,255,255,0.1); color: white; }
+        /* Header & Dashboard */
+        .header { background: var(--bg-header); padding: 40px 20px; text-align: center; color: white; border-bottom: 4px solid var(--gold); position: relative; }
         .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
-        .icon-btn { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; backdrop-filter: blur(5px); }
-        .icon-btn:hover { background: rgba(255,255,255,0.25); }
+        .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; }
 
         .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 500px; margin: 20px auto 0; }
-        .stat-card { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); }
-        .stat-card h2 { font-size: 28px; color: #fbbf24; }
+        .stat-card { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); }
+        .stat-card h2 { font-size: 28px; color: var(--gold); }
 
         .search-container { max-width: 500px; margin: -25px auto 0; padding: 0 15px; position: relative; z-index: 10; }
-        .search-input { width: 100%; padding: 15px 15px 15px 45px; border-radius: 14px; border: none; box-shadow: 0 10px 25px rgba(0,0,0,0.1); font-weight: 600; outline: none; background: var(--bg-card); color: var(--text-main); border: 1px solid var(--card-border); }
+        .search-input { width: 100%; padding: 15px 15px 15px 45px; border-radius: 14px; border: 2px solid var(--accent); box-shadow: 0 10px 20px rgba(0,0,0,0.2); outline: none; background: var(--bg-card); color: var(--text-main); font-weight: bold; }
 
-        /* User Cards - Tight spacing */
-        .container { max-width: 1200px; margin: 30px auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; padding-bottom: 100px; }
-        .user-card { background: var(--bg-card); border: 1px solid var(--card-border); border-radius: 16px; padding: 12px; display: flex; align-items: center; gap: 12px; }
+        /* User Cards */
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 12px; padding-bottom: 100px; }
+        .user-card { background: var(--bg-card); border: 2px solid var(--card-border); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         
-        /* Progress Circle */
-        .progress-circle { position: relative; width: 50px; height: 50px; flex-shrink: 0; }
-        .progress-circle svg { transform: rotate(-90deg); width: 50px; height: 50px; }
-        .progress-circle circle { fill: none; stroke-width: 5; stroke-linecap: round; }
+        .card-top { display: flex; align-items: center; gap: 12px; }
+        .progress-circle { position: relative; width: 55px; height: 55px; flex-shrink: 0; }
+        .progress-circle svg { transform: rotate(-90deg); width: 55px; height: 55px; }
+        .progress-circle circle { fill: none; stroke-width: 6; stroke-linecap: round; }
         .progress-circle .bg { stroke: rgba(128,128,128,0.1); }
         .progress-circle .fg { transition: 0.5s ease; }
-        .progress-circle .percentage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; }
+        .progress-circle .percentage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; }
 
         .user-info { flex-grow: 1; min-width: 0; }
-        .user-name { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 5px; }
-        .status-dot { width: 7px; height: 7px; border-radius: 50%; }
-
-        /* Form Inputs & Buttons */
-        .btn-main { width: 100%; padding: 14px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
-        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
-        .modal-content { background: var(--bg-card); padding: 30px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid var(--card-border); }
-        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); outline: none; }
+        .user-name { font-weight: 800; font-size: 16px; display: block; margin-bottom: 2px; color: var(--text-main); }
         
-        .fab { position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; background: var(--accent); color: white; border-radius: 20px; border: none; font-size: 24px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .action-group { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; margin-top: 5px; }
+        .act-btn { padding: 8px 4px; border-radius: 8px; border: none; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 3px; }
+        .btn-edit { background: #e0e7ff; color: #4338ca; }
+        .btn-block { background: #fee2e2; color: #b91c1c; }
+        .btn-unblock { background: #dcfce7; color: #15803d; }
+        .btn-card { background: #fef3c7; color: #92400e; }
+        .btn-delete { background: #f1f5f9; color: #475569; }
 
-        /* VIP Card Preview */
-        .vip-membership-card { width: 340px; height: 200px; background: #020617; border-radius: 18px; padding: 22px; border: 1px solid var(--gold); color: white; display: flex; flex-direction: column; justify-content: space-between; }
+        /* Modals & Inputs */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
+        .modal-content { background: var(--bg-card); padding: 30px; border-radius: 24px; width: 90%; max-width: 400px; border: 2px solid var(--accent); position: relative; }
+        
+        .quick-select { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .q-btn { padding: 8px; background: var(--bg-body); border: 1px solid var(--card-border); border-radius: 8px; font-size: 11px; font-weight: bold; color: var(--text-main); cursor: pointer; }
+        .q-btn:hover { border-color: var(--accent); background: var(--accent); color: white; }
+
+        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 2px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-weight: bold; }
+        .btn-main { width: 100%; padding: 15px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; }
+        
+        .fab { position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px; background: var(--accent); color: white; border-radius: 22px; border: none; font-size: 26px; cursor: pointer; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000; }
+
+        /* VIP Card Preview Design */
+        .vip-membership-card { width: 340px; height: 200px; background: #020617; border-radius: 18px; padding: 22px; border: 2px solid var(--gold); color: white; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+        .card-inner { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; }
+        .vip-membership-card::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(251,191,36,0.1) 0%, transparent 70%); z-index: 1; }
     </style>
 </head>
-<body class="dark-mode"> <div id="loginSection">
-        <div class="login-card">
+<body class="dark-mode">
+
+    <div id="loginSection" style="display: none;">
+        <div class="login-card" style="background: var(--bg-card); padding: 40px; border-radius: 24px; border: 2px solid var(--accent); text-align: center; width: 90%; max-width: 380px;">
             <h2 style="color:var(--accent); margin-bottom: 20px; font-weight: 900;">AGE ADMIN</h2>
             <input type="text" id="adminUser" placeholder="Username">
             <input type="password" id="adminPass" placeholder="Password">
@@ -91,22 +100,22 @@
         </div>
     </div>
 
-    <div id="mainContent" style="display: none;">
+    <div id="mainContent">
         <div class="header">
             <div class="nav-icons">
                 <button class="icon-btn" onclick="toggleMode()"><i id="modeIcon" class="fas fa-sun"></i></button>
                 <button class="icon-btn" onclick="handleLogout()"><i class="fas fa-power-off"></i></button>
             </div>
-            <h1 style="font-weight: 900; font-size: 28px; letter-spacing: 1px;">AGE <span style="color:#fbbf24">VIP</span> PANEL</h1>
+            <h1 style="font-weight: 900; font-size: 28px;">AGE <span style="color:var(--gold)">VIP</span> PANEL</h1>
             <div class="dashboard">
-                <div class="stat-card"> <h2 id="totalCount">0</h2> <p style="font-size: 10px; opacity: 0.8;">USERS</p> </div>
-                <div class="stat-card"> <h2 id="activeCount">0</h2> <p style="font-size: 10px; opacity: 0.8;">ACTIVE</p> </div>
+                <div class="stat-card"> <h2 id="totalCount">0</h2> <p style="font-size: 10px; font-weight: bold;">TOTAL USERS</p> </div>
+                <div class="stat-card"> <h2 id="activeCount">0</h2> <p style="font-size: 10px; font-weight: bold;">ACTIVE VIP</p> </div>
             </div>
         </div>
 
         <div class="search-container">
-            <i class="fas fa-search" style="position:absolute; left:30px; top:18px; color:var(--accent);"></i>
-            <input type="text" id="searchInput" class="search-input" placeholder="Search by name or token..." onkeyup="filterUsers()">
+            <i class="fas fa-search" style="position:absolute; left:20px; top:18px; color:var(--accent);"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search account ID or Name..." onkeyup="filterUsers()">
         </div>
 
         <div class="container" id="listContainer"></div>
@@ -115,34 +124,45 @@
 
     <div class="modal-overlay" id="inputModal">
         <div class="modal-content">
-            <h3 style="margin-bottom: 15px; font-weight: 900;">NEW LICENSE</h3>
-            <input type="text" id="mId" placeholder="Token / Serial ID">
+            <h3 style="margin-bottom: 15px; font-weight: 900; color: var(--accent);">REGISTER LICENSE</h3>
+            <input type="text" id="mId" placeholder="Account ID / Token">
             <input type="text" id="mName" placeholder="Customer Name">
+            
+            <p style="font-size: 11px; margin-bottom: 5px; font-weight: bold; opacity: 0.7;">QUICK EXPIRY:</p>
+            <div class="quick-select">
+                <button class="q-btn" onclick="setQuickDate(1)">1 Month</button>
+                <button class="q-btn" onclick="setQuickDate(2)">2 Months</button>
+                <button class="q-btn" onclick="setQuickDate(12)">1 Year</button>
+            </div>
             <input type="date" id="mDate">
+            
             <button class="btn-main" onclick="handleSaveData()">ACTIVATE VIP</button>
-            <button class="btn-main" style="background:transparent; color:var(--text-dim); border:1px solid var(--card-border);" onclick="document.getElementById('inputModal').style.display='none'">CLOSE</button>
+            <button class="btn-main" style="background:#64748b; margin-top: 5px;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="voucherOverlay">
         <div style="display: flex; flex-direction: column; align-items: center;">
             <div class="vip-membership-card" id="voucherPrint">
-                <div style="display: flex; justify-content: space-between;">
-                    <div style="font-weight: 900; color: #fbbf24;"><i class="fas fa-crown"></i> AGE VIP</div>
-                    <div style="width: 35px; height: 25px; background: #fbbf24; border-radius: 4px;"></div>
-                </div>
-                <div id="vId" style="font-family: monospace; font-size: 18px; letter-spacing: 2px;">0000 0000 0000</div>
-                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                    <div><span style="font-size: 7px; opacity: 0.5;">MEMBER</span><br><span id="vName" style="font-weight: bold;">User Name</span></div>
-                    <div style="text-align: right;"><span style="font-size: 7px; opacity: 0.5;">EXPIRY</span><br><span id="vExp" style="font-weight: bold; color: #fbbf24;">00/00/00</span></div>
+                <div class="card-inner">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div style="font-weight: 900; color: var(--gold); font-size: 18px;"><i class="fas fa-crown"></i> AGE VIP</div>
+                        <div style="width: 40px; height: 30px; background: linear-gradient(135deg, #fbbf24, #d97706); border-radius: 6px;"></div>
+                    </div>
+                    <div id="vId" style="font-family: monospace; font-size: 22px; letter-spacing: 2.5px; font-weight: bold; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">0000 0000 0000</div>
+                    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                        <div><span style="font-size: 8px; opacity: 0.6;">MEMBER NAME</span><br><span id="vName" style="font-weight: bold; font-size: 15px; text-transform: uppercase;">USER NAME</span></div>
+                        <div style="text-align: right;"><span style="font-size: 8px; opacity: 0.6;">EXPIRY DATE</span><br><span id="vExp" style="font-weight: bold; color: var(--gold); font-size: 14px;">00/00/0000</span></div>
+                    </div>
                 </div>
             </div>
-            <button class="btn-main" style="width:340px; margin-top:15px;" onclick="downloadVoucher()">SAVE IMAGE</button>
-            <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="color:white; margin-top:15px; background:none; border:none; opacity:0.6; cursor:pointer;">BACK</button>
+            <button class="btn-main" style="width:340px; margin-top:15px; background: var(--gold); color: #000;" onclick="downloadVoucher()">DOWNLOAD CARD</button>
+            <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="color:white; margin-top:15px; background:none; border:none; opacity:0.6; cursor:pointer;">CLOSE PREVIEW</button>
         </div>
     </div>
 
     <script>
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyB3cFSVLfpvHPeD732r-iL4Yfhi0wHEuOA",
             authDomain: "vipsystem-c301c.firebaseapp.com",
@@ -156,10 +176,15 @@
         let allUsers = [];
 
         function toggleMode() {
-            const body = document.body;
-            body.classList.toggle('dark-mode');
-            const isDark = body.classList.contains('dark-mode');
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
             document.getElementById('modeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        function setQuickDate(months) {
+            let d = new Date();
+            d.setMonth(d.getMonth() + months);
+            document.getElementById('mDate').value = d.toISOString().split('T')[0];
         }
 
         function handleLogin() {
@@ -174,43 +199,72 @@
             document.getElementById('mainContent').style.display = auth ? 'block' : 'none';
         }
 
-        function handleSaveData() {
-            const id = document.getElementById('mId').value.trim(), name = document.getElementById('mName').value.trim(), exp = document.getElementById('mDate').value;
-            if(!id || !name || !exp) return alert("Fill all!");
-            db.collection("users").doc(id).set({ username: name, expiryDate: exp, isActive: true }, { merge: true }).then(() => {
-                document.getElementById('inputModal').style.display='none';
-                document.getElementById('vId').innerText = id; document.getElementById('vName').innerText = name;
-                document.getElementById('vExp').innerText = exp; document.getElementById('voucherOverlay').style.display = 'flex';
-            });
+        // Voucher ပြသခြင်း
+        function showVoucher(id, name, exp) {
+            document.getElementById('vId').innerText = id;
+            document.getElementById('vName').innerText = name;
+            // Date format ပြောင်းခြင်း (YYYY-MM-DD to DD/MM/YYYY)
+            document.getElementById('vExp').innerText = exp.split('-').reverse().join('/');
+            document.getElementById('voucherOverlay').style.display = 'flex';
         }
 
-        function toggleUserStatus(id, currentStatus) { db.collection("users").doc(id).update({ isActive: !currentStatus }); }
+        // Data သိမ်းဆည်းခြင်း (Add/Edit)
+        function handleSaveData() {
+            const id = document.getElementById('mId').value.trim(), 
+                  name = document.getElementById('mName').value.trim(), 
+                  exp = document.getElementById('mDate').value;
+            
+            if(!id || !name || !exp) return alert("အချက်အလက်အားလုံး ပြည့်စုံအောင်ဖြည့်ပါ။");
 
+            db.collection("users").doc(id).set({
+                username: name,
+                expiryDate: exp,
+                isActive: true
+            }, { merge: true }).then(() => {
+                document.getElementById('inputModal').style.display='none';
+                // User အသစ် add ပြီးတာနဲ့ Voucher ကို တန်းပြခြင်း
+                showVoucher(id, name, exp);
+            }).catch(err => alert("Error saving: " + err));
+        }
+
+        function toggleUserStatus(id, currentStatus) {
+            db.collection("users").doc(id).update({ isActive: !currentStatus });
+        }
+
+        // User List ပြသခြင်း
         function renderUsers(users) {
-            const list = document.getElementById('listContainer'); list.innerHTML = "";
+            const list = document.getElementById('listContainer');
+            list.innerHTML = "";
             users.forEach(u => {
                 const days = Math.ceil((new Date(u.expiryDate) - new Date()) / 86400000);
-                const isExpired = days <= 0; const active = u.isActive !== false;
+                const isExpired = days <= 0;
+                const active = u.isActive !== false;
+                const color = active ? (isExpired ? '#ef4444' : '#22c55e') : '#64748b';
+                
+                // Progress Circle calculation
+                const stroke = 154;
                 const percent = isExpired ? 0 : Math.min(100, (days / 30) * 100);
-                const color = active ? (isExpired ? '#ef4444' : (days < 5 ? '#f59e0b' : '#22c55e')) : '#64748b';
-                const stroke = 125.6; const offset = stroke - (percent / 100) * stroke;
+                const offset = stroke - (percent / 100) * stroke;
 
                 list.innerHTML += `
-                    <div class="user-card">
-                        <div class="progress-circle">
-                            <svg><circle class="bg" cx="25" cy="25" r="20"/><circle class="fg" cx="25" cy="25" r="20" style="stroke-dasharray: ${stroke}; stroke-dashoffset: ${offset}; stroke: ${color};"/></svg>
-                            <div class="percentage" style="color:${color}">${isExpired ? 'EXP' : days + 'D'}</div>
+                    <div class="user-card" style="border-left: 5px solid ${color}">
+                        <div class="card-top">
+                            <div class="progress-circle">
+                                <svg><circle class="bg" cx="27.5" cy="27.5" r="24.5"/><circle class="fg" cx="27.5" cy="27.5" r="24.5" style="stroke-dasharray: ${stroke}; stroke-dashoffset: ${offset}; stroke: ${color};"/></svg>
+                                <div class="percentage" style="color:${color}">${isExpired ? 'EXP' : days + 'D'}</div>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">${u.username}</span>
+                                <div style="font-size: 10px; color: var(--text-dim); font-weight: bold;">ID: ${u.id} | EXP: ${u.expiryDate}</div>
+                            </div>
                         </div>
-                        <div class="user-info">
-                            <div class="user-name">
-                                <span class="status-dot" style="background:${color}"></span> ${u.username}
-                            </div>
-                            <div style="font-size: 9px; color: var(--text-dim); margin-top: 1px;">ID: ${u.id}</div>
-                            <div style="margin-top: 5px; display: flex; gap: 12px; font-size: 13px;">
-                                <i class="fas fa-edit" style="color:var(--text-dim); cursor:pointer;" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')"></i>
-                                <i class="fas fa-${active ? 'ban' : 'check-circle'}" style="color:${active ? '#ef4444' : '#22c55e'}; cursor:pointer;" onclick="toggleUserStatus('${u.id}', ${active})"></i>
-                                <i class="fas fa-trash" style="color:#ef4444; cursor:pointer;" onclick="if(confirm('Delete?')) db.collection('users').doc('${u.id}').delete()"></i>
-                            </div>
+                        <div class="action-group">
+                            <button class="act-btn btn-edit" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="act-btn ${active ? 'btn-block' : 'btn-unblock'}" onclick="toggleUserStatus('${u.id}', ${active})">
+                                <i class="fas fa-${active ? 'ban' : 'check'}"></i> ${active ? 'Block' : 'Active'}
+                            </button>
+                            <button class="act-btn btn-card" onclick="showVoucher('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-id-card"></i> Card</button>
+                            <button class="act-btn btn-delete" onclick="if(confirm('Delete user?')) db.collection('users').doc('${u.id}').delete()"><i class="fas fa-trash"></i> Del</button>
                         </div>
                     </div>`;
             });
@@ -222,23 +276,37 @@
             renderUsers(filtered);
         }
 
+        // Firebase Real-time Listener
         db.collection("users").onSnapshot(snap => {
             allUsers = []; let t = 0, a = 0;
-            snap.forEach(doc => { t++; const d = doc.data(); if(d.isActive && (new Date(d.expiryDate) > new Date())) a++; allUsers.push({ id: doc.id, ...d }); });
-            document.getElementById('totalCount').innerText = t; document.getElementById('activeCount').innerText = a;
+            snap.forEach(doc => {
+                t++;
+                const d = doc.data();
+                if(d.isActive && (new Date(d.expiryDate) > new Date())) a++;
+                allUsers.push({ id: doc.id, ...d });
+            });
+            document.getElementById('totalCount').innerText = t;
+            document.getElementById('activeCount').innerText = a;
             filterUsers();
         });
 
         function openInputModal(id='', name='', date='') {
-            document.getElementById('mId').value = id; document.getElementById('mId').disabled = id !== '';
-            document.getElementById('mName').value = name; document.getElementById('mDate').value = date;
+            document.getElementById('mId').value = id;
+            document.getElementById('mId').disabled = id !== '';
+            document.getElementById('mName').value = name;
+            document.getElementById('mDate').value = date;
             document.getElementById('inputModal').style.display = 'flex';
         }
+
         function downloadVoucher() {
             html2canvas(document.getElementById('voucherPrint'), { scale: 3 }).then(canvas => {
-                const link = document.createElement('a'); link.download = 'VIP_CARD.png'; link.href = canvas.toDataURL(); link.click();
+                const link = document.createElement('a');
+                link.download = `AGE_VIP_${document.getElementById('vName').innerText}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
             });
         }
+
         window.onload = checkAuth;
     </script>
 </body>
