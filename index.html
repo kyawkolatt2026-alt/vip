@@ -171,6 +171,11 @@
         .delete-btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
         .btn-confirm-del { padding: 12px; background: #dc2626; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
         .btn-cancel-del { padding: 12px; background: #4b5563; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
+
+        /* Password Wrapper for toggle icon */
+        .password-wrapper { position: relative; }
+        .password-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim); }
+        .password-wrapper i:hover { color: var(--accent); }
     </style>
 </head>
 <body class="dark-mode">
@@ -179,7 +184,10 @@
         <div class="login-card" style="background: var(--bg-card); padding: 40px; border-radius: 24px; border: 2px solid var(--accent); text-align: center; width: 100%; max-width: 380px;">
             <h2 style="color:var(--accent); margin-bottom: 20px; font-weight: 900; letter-spacing: 1px;">AGE ADMIN</h2>
             <input type="text" id="adminUser" placeholder="Username">
-            <input type="password" id="adminPass" placeholder="Password">
+            <div class="password-wrapper">
+                <input type="password" id="adminPass" placeholder="Password">
+                <i class="fas fa-eye" onclick="togglePassword('adminPass', this)"></i>
+            </div>
             <button class="btn-main" onclick="handleLogin()">LOGIN</button>
         </div>
     </div>
@@ -187,6 +195,7 @@
     <div id="mainContent" style="display: none;">
         <div class="header">
             <div class="nav-icons">
+                <button class="icon-btn" onclick="openSettingsModal()"><i class="fas fa-cog" style="color:white;"></i></button>
                 <button class="icon-btn" onclick="toggleMode()"><i id="modeIcon" class="fas fa-sun" style="color:white;"></i></button>
                 <button class="icon-btn" onclick="handleLogout()"><i class="fas fa-power-off" style="color:white;"></i></button>
             </div>
@@ -255,13 +264,44 @@
                     <div id="vId" style="font-family: monospace; font-size: 22px; letter-spacing: 2.5px; font-weight: bold; color: #fff; margin-top: 15px;">0000 0000 0000</div>
                     
                     <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                        <div><span style="font-size: 8px; opacity: 0.5; font-weight: bold; letter-spacing: 0.5px;">MEMBER NAME</span><br><span id="vName" style="font-weight: bold; font-size: 15px; text-transform: uppercase; color: #ffffff;">USER NAME</span></div>
-                        <div style="text-align: right;"><span style="font-size: 8px; opacity: 0.5; font-weight: bold; letter-spacing: 0.5px;">EXPIRY DATE</span><br><span id="vExp" style="font-weight: bold; color: var(--gold); font-size: 14px;">00/00/0000</span></div>
+                        <div>
+                            <p style="font-size: 8px; text-transform: uppercase; opacity: 0.6; letter-spacing: 1px; margin-bottom: 2px;">Card Holder</p>
+                            <p id="vName" style="font-weight: 900; font-size: 16px; text-transform: uppercase;">CUSTOMER NAME</p>
+                        </div>
+                        <div style="text-align: right;">
+                            <p style="font-size: 8px; text-transform: uppercase; opacity: 0.6; letter-spacing: 1px; margin-bottom: 2px;">Expires On</p>
+                            <p id="vExp" style="font-family: monospace; font-weight: bold; font-size: 14px;">00/00/0000</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <button class="btn-main" style="width:340px; margin-top:15px; background: var(--gold); color: #000000;" onclick="downloadVoucher()">DOWNLOAD CARD</button>
             <button onclick="document.getElementById('voucherOverlay').style.display='none'" style="color:white; margin-top:15px; background:none; border:none; opacity:0.6; cursor:pointer;">CLOSE</button>
+        </div>
+    </div>
+
+    
+    <!-- SETTINGS MODAL -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px; font-weight: 900; color: var(--accent);">ADMIN SETTINGS</h3>
+            <p style="font-size: 11px; font-weight: bold; margin-bottom: 5px; opacity: 0.7;">CHANGE USERNAME:</p>
+            <input type="text" id="newAdminUser" placeholder="New Username">
+            
+            <p style="font-size: 11px; font-weight: bold; margin-bottom: 5px; opacity: 0.7;">CHANGE PASSWORD:</p>
+            <div class="password-wrapper">
+                <input type="password" id="newAdminPass" placeholder="New Password">
+                <i class="fas fa-eye" onclick="togglePassword('newAdminPass', this)"></i>
+            </div>
+            
+            <p style="font-size: 11px; font-weight: bold; margin-bottom: 5px; opacity: 0.7;">CONFIRM PASSWORD:</p>
+            <div class="password-wrapper">
+                <input type="password" id="confirmAdminPass" placeholder="Confirm Password">
+                <i class="fas fa-eye" onclick="togglePassword('confirmAdminPass', this)"></i>
+            </div>
+            
+            <button class="btn-main" onclick="handleSaveSettings()">SAVE SETTINGS</button>
+            <button class="btn-main" style="background:#4b5563; color: white; margin-top: 5px;" onclick="document.getElementById('settingsModal').style.display='none'">CANCEL</button>
         </div>
     </div>
 
@@ -295,6 +335,17 @@
             document.getElementById('modeIcon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
 
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.className = "fas fa-eye-slash";
+            } else {
+                input.type = "password";
+                icon.className = "fas fa-eye";
+            }
+        }
+
         function addFixedDays(days) {
             let d = new Date();
             d.setDate(d.getDate() + days);
@@ -304,10 +355,38 @@
         function handleLogin() {
             const user = document.getElementById('adminUser').value;
             const pass = document.getElementById('adminPass').value;
-            if(user === "AGEVPN" && pass === "1234567") {
+            
+            // Get saved credentials or use defaults
+            const savedUser = localStorage.getItem("adminUser") || "AGEVPN";
+            const savedPass = localStorage.getItem("adminPass") || "1234567";
+            
+            if(user === savedUser && pass === savedPass) {
                 localStorage.setItem("ageLogin", "true");
                 checkAuth();
-            } else alert("Incorrect Credentials!");
+            } else {
+                alert("Incorrect Username or Password!");
+            }
+        }
+
+        function openSettingsModal() {
+            document.getElementById('newAdminUser').value = localStorage.getItem("adminUser") || "AGEVPN";
+            document.getElementById('newAdminPass').value = localStorage.getItem("adminPass") || "1234567";
+            document.getElementById('confirmAdminPass').value = "";
+            document.getElementById('settingsModal').style.display = 'flex';
+        }
+
+        function handleSaveSettings() {
+            const u = document.getElementById('newAdminUser').value.trim();
+            const p = document.getElementById('newAdminPass').value.trim();
+            const cp = document.getElementById('confirmAdminPass').value.trim();
+            
+            if(!u || !p || !cp) return alert("Fields cannot be empty!");
+            if(p !== cp) return alert("Passwords do not match!");
+            
+            localStorage.setItem("adminUser", u);
+            localStorage.setItem("adminPass", p);
+            alert("Settings saved successfully!");
+            document.getElementById('settingsModal').style.display = 'none';
         }
 
         function handleLogout() {
@@ -358,105 +437,89 @@
         function handleSaveData() {
             const id = document.getElementById('mId').value.trim(), 
                   name = document.getElementById('mName').value.trim(), 
-                  exp = document.getElementById('mDate').value;
-            if(!id || !name || !exp) return alert("Fill all!");
-            db.collection("users").doc(id).set({ username: name, expiryDate: exp, isActive: true }, { merge: true })
-            .then(() => {
-                document.getElementById('inputModal').style.display='none';
-                showVoucher(id, name, exp);
+                  date = document.getElementById('mDate').value;
+            
+            if(!id || !name || !date) return alert("All fields are required!");
+
+            db.collection("users").doc(id).set({
+                username: name,
+                expiryDate: date,
+                isActive: true
+            }).then(() => {
+                alert("VIP Activated Successfully!");
+                document.getElementById('inputModal').style.display = 'none';
             });
         }
 
-        function toggleUserStatus(id, currentStatus) {
-            db.collection("users").doc(id).update({ isActive: !currentStatus });
-        }
-
-        function openDeleteModal(id, username) {
-            userIdToDelete = id;
-            document.getElementById('deleteTargetName').innerText = username;
-            document.getElementById('deleteModal').style.display = 'flex';
-        }
-
-        function closeDeleteModal() {
-            userIdToDelete = null;
-            document.getElementById('deleteModal').style.display = 'none';
-        }
-
-        function executeDelete() {
-            if(userIdToDelete) {
-                db.collection('users').doc(userIdToDelete).delete().then(() => {
-                    closeDeleteModal();
-                }).catch(err => {
-                    alert("Error deleting user: " + err);
-                });
-            }
-        }
-
         function renderUsers(users) {
-            const list = document.getElementById('listContainer');
-            list.innerHTML = "";
-            
+            const container = document.getElementById('listContainer');
+            container.innerHTML = "";
             const today = new Date();
             today.setHours(0,0,0,0);
 
             users.forEach(u => {
-                const expiry = new Date(u.expiryDate);
-                expiry.setHours(0,0,0,0);
+                const expDate = new Date(u.expiryDate);
+                expDate.setHours(0,0,0,0);
+                const diffTime = expDate.getTime() - today.getTime();
+                const daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
                 
-                const diffTime = expiry.getTime() - today.getTime();
-                const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                
-                const isExpired = days <= 0;
-                const active = u.isActive !== false;
-                
-                /* ရက်ကျန်အပေါ် မူတည်ပြီး dynamic ကာလာ ရယူခြင်း */
-                const color = getProgressColor(days, active);
-                const statusText = active ? (isExpired ? 'Expired' : 'Active') : 'Blocked';
-                
-                const stroke = 2 * Math.PI * 28; 
-                const percent = isExpired ? 0 : Math.min(100, (days / 30) * 100);
-                const offset = stroke - (percent / 100) * stroke;
+                const cardColor = getProgressColor(daysLeft, u.isActive);
+                const progress = Math.max(0, Math.min(100, (daysLeft / 30) * 100));
+                const dashOffset = 188.4 - (188.4 * progress / 100);
 
-                list.innerHTML += `
-                    <div class="user-card" style="border-top: 4px solid ${color}">
-                        <div class="status-badge" style="background:${color}20; color:${color}; border: 1px solid ${color}40;">${statusText}</div>
-                        
-                        <div class="card-top">
-                            <div class="progress-circle">
-                                <svg>
-                                    <circle class="bg" cx="32" cy="32" r="28"/>
-                                    <circle class="fg" cx="32" cy="32" r="28" style="stroke-dasharray: ${stroke}; stroke-dashoffset: ${offset}; stroke: ${color};"/>
-                                </svg>
-                                <div class="percentage" style="color:${color}">${isExpired ? 'EXP' : days + 'D'}</div>
-                            </div>
-                            <div class="user-info">
-                                <span class="user-sub-title">VIP Member</span>
-                                <div class="user-name-title">
-                                    <i class="fas fa-crown" style="color:var(--gold);"></i>
-                                    <span>${u.username}</span>
-                                </div>
-                            </div>
+                const card = document.createElement('div');
+                card.className = 'user-card';
+                card.innerHTML = `
+                    <div class="status-badge" style="background: ${cardColor}20; color: ${cardColor}; border: 1px solid ${cardColor}40;">
+                        ${!u.isActive ? 'BLOCKED' : (daysLeft <= 0 ? 'EXPIRED' : 'ACTIVE')}
+                    </div>
+                    <div class="card-top">
+                        <div class="progress-circle">
+                            <svg><circle class="bg" cx="32" cy="32" r="30"></circle><circle style="stroke: ${cardColor}; stroke-dashoffset: ${dashOffset}; stroke-dasharray: 188.4;" cx="32" cy="32" r="30"></circle></svg>
+                            <div class="percentage" style="color: ${cardColor}">${daysLeft <= 0 ? '!' : daysLeft + 'd'}</div>
                         </div>
-
-                        <div class="user-data-wrapper">
-                            <div class="data-item">
-                                <span class="data-label">Account ID</span>
-                                <span class="data-value id">${u.id}</span>
-                            </div>
-                            <div class="data-item right-align">
-                                <span class="data-label">Expiry Date</span>
-                                <span class="data-value">${u.expiryDate}</span>
-                            </div>
+                        <div class="user-info">
+                            <div class="user-name-title">${u.username} <i class="fas fa-check-circle"></i></div>
+                            <div class="user-sub-title">PREMIUM MEMBER</div>
                         </div>
-
-                        <div class="action-group">
-                            <button class="act-btn btn-edit" onclick="openInputModal('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-edit" style="color:white;"></i> Edit</button>
-                            <button class="act-btn ${active ? 'btn-block' : 'btn-unblock'}" onclick="toggleUserStatus('${u.id}', ${active})"><i class="fas fa-${active ? 'ban' : 'check'}" style="color:white;"></i> ${active ? 'Block' : 'Active'}</button>
-                            <button class="act-btn btn-card" onclick="showVoucher('${u.id}','${u.username}','${u.expiryDate}')"><i class="fas fa-id-card" style="color:white;"></i> Card</button>
-                            <button class="act-btn btn-delete" onclick="openDeleteModal('${u.id}', '${u.username}')"><i class="fas fa-trash" style="color:white;"></i> Del</button>
-                        </div>
-                    </div>`;
+                    </div>
+                    <div class="user-data-wrapper">
+                        <div class="data-item"><div class="data-label">Account ID</div><div class="data-value id">${u.id}</div></div>
+                        <div class="data-item right-align"><div class="data-label">Expiration</div><div class="data-value">${u.expiryDate.split('-').reverse().join('/')}</div></div>
+                    </div>
+                    <div class="action-group">
+                        <button class="act-btn btn-edit" onclick="openInputModal('${u.id}', '${u.username}', '${u.expiryDate}')"><i class="fas fa-edit"></i></button>
+                        <button class="act-btn ${u.isActive ? 'btn-block' : 'btn-unblock'}" onclick="toggleStatus('${u.id}', ${u.isActive})"><i class="fas fa-${u.isActive ? 'ban' : 'check'}"></i></button>
+                        <button class="act-btn btn-card" onclick="showVoucher('${u.id}', '${u.username}', '${u.expiryDate}')"><i class="fas fa-id-card"></i></button>
+                        <button class="act-btn btn-delete" onclick="confirmDelete('${u.id}', '${u.username}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                container.appendChild(card);
             });
+        }
+
+        function toggleStatus(id, currentStatus) {
+            db.collection("users").doc(id).update({ isActive: !currentStatus });
+        }
+
+        function confirmDelete(id, name) {
+            userIdToDelete = id;
+            document.getElementById('deleteTargetName').innerText = name;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').style.display = 'none';
+            userIdToDelete = null;
+        }
+
+        function executeDelete() {
+            if (userIdToDelete) {
+                db.collection("users").doc(userIdToDelete).delete().then(() => {
+                    closeDeleteModal();
+                    alert("User deleted successfully!");
+                });
+            }
         }
 
         function filterUsers() {
