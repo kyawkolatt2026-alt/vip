@@ -231,6 +231,9 @@
             </div>
             <input type="date" id="mDate">
             
+            <p style="font-size: 11px; font-weight: bold; margin: 10px 0 5px; opacity: 0.7;">DATA LIMIT:</p>
+            <input type="number" id="mDataLimit" min="0" step="0.01" placeholder="Data Limit (GB) - 0 or empty = Unlimited">
+            
             <button class="btn-main" onclick="handleSaveData()">ACTIVATE VIP</button>
             <button class="btn-main" style="background:#4b5563; color: white; margin-top: 5px;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
         </div>
@@ -498,15 +501,21 @@
         function handleSaveData() {
             const id = document.getElementById('mId').value.trim(), 
                   name = document.getElementById('mName').value.trim(), 
-                  date = document.getElementById('mDate').value;
+                  date = document.getElementById('mDate').value,
+                  dataLimitGBInput = document.getElementById('mDataLimit').value.trim();
             
             if(!id || !name || !date) return alert("All fields are required!");
+            const dataLimitGB = dataLimitGBInput === "" ? 0 : parseFloat(dataLimitGBInput);
+            if (isNaN(dataLimitGB) || dataLimitGB < 0) return alert("Data Limit must be 0 or a positive number!");
+            const dataLimitMB = Math.round(dataLimitGB * 1024);
 
             db.collection("users").doc(id).set({
                 username: name,
                 expiryDate: date,
-                isActive: true
-            }).then(() => {
+                isActive: true,
+                dataLimitMB: dataLimitMB,
+                dataLimitGB: dataLimitGB
+            }, { merge: true }).then(() => {
                 alert("VIP Activated Successfully!");
                 document.getElementById('inputModal').style.display = 'none';
             });
@@ -529,6 +538,8 @@
                 
                 const cardColor = getProgressColor(daysLeft, u.isActive);
                 const progress = Math.max(0, Math.min(100, (daysLeft / 30) * 100));
+                const dataLimitMB = Number(u.dataLimitMB || 0);
+                const dataLimitText = dataLimitMB > 0 ? (dataLimitMB >= 1024 ? (dataLimitMB / 1024).toFixed(2).replace(/\.00$/, '') + ' GB' : dataLimitMB + ' MB') : 'Unlimited';
                 const dashOffset = 188.4 - (188.4 * progress / 100);
 
                 const card = document.createElement('div');
@@ -550,9 +561,11 @@
                     <div class="user-data-wrapper">
                         <div class="data-item"><div class="data-label">Account ID</div><div class="data-value id">${u.id}</div></div>
                         <div class="data-item right-align"><div class="data-label">Expiration</div><div class="data-value">${u.expiryDate.split('-').reverse().join('/')}</div></div>
+                        <div class="data-item"><div class="data-label">Data Limit</div><div class="data-value">${dataLimitText}</div></div>
+                        <div class="data-item right-align"><div class="data-label">Limit Field</div><div class="data-value">${dataLimitMB > 0 ? dataLimitMB + ' MB' : 'OFF'}</div></div>
                     </div>
                     <div class="action-group">
-                        <button class="act-btn btn-edit" onclick="openInputModal('${u.id}', '${u.username}', '${u.expiryDate}')"><i class="fas fa-edit"></i></button>
+                        <button class="act-btn btn-edit" onclick="openInputModal('${u.id}', '${u.username}', '${u.expiryDate}', '${u.dataLimitMB || 0}')"><i class="fas fa-edit"></i></button>
                         <button class="act-btn ${u.isActive ? 'btn-block' : 'btn-unblock'}" onclick="toggleStatus('${u.id}', ${u.isActive})"><i class="fas fa-${u.isActive ? 'ban' : 'check'}"></i></button>
                         <button class="act-btn btn-card" onclick="showVoucher('${u.id}', '${u.username}', '${u.expiryDate}')"><i class="fas fa-id-card"></i></button>
                         <button class="act-btn btn-delete" onclick="confirmDelete('${u.id}', '${u.username}')"><i class="fas fa-trash"></i></button>
@@ -613,11 +626,13 @@
             filterUsers();
         });
 
-        function openInputModal(id='', name='', date='') {
+        function openInputModal(id='', name='', date='', dataLimitMB='') {
             document.getElementById('mId').value = id;
             document.getElementById('mId').disabled = id !== '';
             document.getElementById('mName').value = name;
             document.getElementById('mDate').value = date;
+            const mb = Number(dataLimitMB || 0);
+            document.getElementById('mDataLimit').value = mb > 0 ? (mb / 1024).toFixed(2).replace(/\.00$/, '') : '';
             document.getElementById('inputModal').style.display = 'flex';
         }
 
