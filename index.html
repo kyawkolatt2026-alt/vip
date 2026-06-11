@@ -46,7 +46,7 @@
         .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
         .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 500px; margin: 20px auto 0; }
+        .dashboard { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; max-width: 600px; margin: 20px auto 0; }
         .stat-card { background: rgba(255,255,255,0.06); padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
         .stat-card h2 { font-size: 28px; color: var(--gold); }
 
@@ -55,7 +55,7 @@
 
         .container { max-width: 1200px; margin: 30px auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 15px; padding-bottom: 100px; }
         
-        .user-card { background: var(--bg-card); border: 1px solid var(--card-border); border-radius: 22px; padding: 18px; display: grid; grid-template-rows: auto auto auto; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
+        .user-card { background: var(--bg-card); border: 1px solid var(--card-border); border-radius: 22px; padding: 18px; display: grid; grid-template-rows: auto auto auto auto; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
         
         .status-badge { position: absolute; top: 15px; right: 15px; padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; z-index: 10; }
 
@@ -81,7 +81,16 @@
         .data-value { font-size: 13px; color: var(--text-main); font-weight: 900; }
         .data-value.id { font-family: monospace; font-size: 13px; color: var(--accent); }
 
-        .action-group { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 6px; margin-top: 4px; }
+        /* Data Usage Bar */
+        .data-usage-section { padding: 8px 0; border-bottom: 1px solid var(--card-border); }
+        .data-usage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .data-usage-label { font-size: 10px; color: var(--text-dim); font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 5px; }
+        .data-usage-value { font-size: 11px; font-weight: 900; }
+        .data-bar-bg { width: 100%; height: 8px; background: rgba(128,128,128,0.15); border-radius: 10px; overflow: hidden; }
+        .data-bar-fill { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
+        .data-bar-unlimited { background: linear-gradient(90deg, #34d399, #10b981); width: 100%; }
+
+        .action-group { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 6px; margin-top: 4px; }
         .act-btn { padding: 9px 4px; border-radius: 10px; border: none; font-size: 11px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: 0.2s; }
         .act-btn:hover { opacity: 0.85; transform: translateY(-1px); }
         
@@ -90,16 +99,23 @@
         .btn-unblock { background: #059669; color: #ffffff; }
         .btn-card { background: #d97706; color: #ffffff; }
         .btn-delete { background: #4b5563; color: #ffffff; }
+        .btn-data { background: #7c3aed; color: #ffffff; }
 
         .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; z-index: 2100; backdrop-filter: blur(8px); }
-        .modal-content { background: var(--bg-card); padding: 25px; border-radius: 24px; width: 90%; max-width: 400px; border: 2px solid var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .modal-content { background: var(--bg-card); padding: 25px; border-radius: 24px; width: 90%; max-width: 400px; border: 2px solid var(--accent); box-shadow: 0 20px 40px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
         
         .quick-date-group { display: flex; gap: 8px; margin-bottom: 10px; }
         .q-date-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .q-date-btn:hover { background: var(--accent); color: #000000; border-color: var(--accent); }
 
-        input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-weight: bold; }
-        input:focus { border-color: var(--accent); outline: none; }
+        /* Data limit quick buttons */
+        .data-quick-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+        .d-btn { padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center; }
+        .d-btn:hover { background: #7c3aed; color: #ffffff; border-color: #7c3aed; }
+        .d-btn.active { background: #7c3aed; color: #ffffff; border-color: #7c3aed; }
+
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-weight: bold; }
+        input:focus, select:focus { border-color: var(--accent); outline: none; }
         .btn-main { width: 100%; padding: 15px; background: var(--accent); color: #000000; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; margin-top: 10px; letter-spacing: 0.5px; }
         
         .fab { 
@@ -176,6 +192,31 @@
         .password-wrapper { position: relative; }
         .password-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim); }
         .password-wrapper i:hover { color: var(--accent); }
+
+        /* Data Modal Styles */
+        .data-modal-content { background: var(--bg-card); padding: 25px; border-radius: 24px; width: 90%; max-width: 400px; border: 2px solid #7c3aed; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .data-info-box { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3); border-radius: 12px; padding: 15px; margin: 10px 0; }
+        .data-info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .data-info-row:last-child { margin-bottom: 0; }
+        .data-info-key { font-size: 11px; color: var(--text-dim); font-weight: bold; text-transform: uppercase; }
+        .data-info-val { font-size: 13px; font-weight: 900; color: #a78bfa; }
+
+        /* Reset confirm */
+        .reset-confirm-box { background: rgba(220,38,38,0.1); border: 1px solid rgba(220,38,38,0.3); border-radius: 12px; padding: 15px; margin: 10px 0; text-align: center; }
+
+        /* Tooltip for data bar */
+        .data-tooltip { font-size: 10px; color: var(--text-dim); margin-top: 4px; text-align: right; }
+
+        /* Filter tabs */
+        .filter-tabs { display: flex; gap: 8px; max-width: 500px; margin: 15px auto 0; padding: 0 15px; flex-wrap: wrap; }
+        .filter-tab { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--card-border); background: var(--bg-card); color: var(--text-dim); font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .filter-tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+        .filter-tab:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Data limit exceeded warning */
+        .data-exceeded-badge { background: rgba(220,38,38,0.15); color: #ef4444; border: 1px solid rgba(220,38,38,0.3); padding: 3px 8px; border-radius: 6px; font-size: 9px; font-weight: 900; text-transform: uppercase; display: inline-flex; align-items: center; gap: 3px; }
+        .data-ok-badge { background: rgba(52,211,153,0.15); color: #34d399; border: 1px solid rgba(52,211,153,0.3); padding: 3px 8px; border-radius: 6px; font-size: 9px; font-weight: 900; text-transform: uppercase; display: inline-flex; align-items: center; gap: 3px; }
+        .data-unlimited-badge { background: rgba(124,58,237,0.15); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); padding: 3px 8px; border-radius: 6px; font-size: 9px; font-weight: 900; text-transform: uppercase; display: inline-flex; align-items: center; gap: 3px; }
     </style>
 </head>
 <body class="dark-mode">
@@ -203,12 +244,22 @@
             <div class="dashboard">
                 <div class="stat-card"> <h2 id="totalCount">0</h2> <p style="font-size: 10px; font-weight: bold; opacity: 0.7; color: white;">TOTAL USERS</p> </div>
                 <div class="stat-card"> <h2 id="activeCount">0</h2> <p style="font-size: 10px; font-weight: bold; opacity: 0.7; color: white;">ACTIVE VIP</p> </div>
+                <div class="stat-card"> <h2 id="dataLimitedCount">0</h2> <p style="font-size: 10px; font-weight: bold; opacity: 0.7; color: white;">DATA LIMITED</p> </div>
             </div>
         </div>
 
         <div class="search-container">
             <i class="fas fa-search" style="position:absolute; left:20px; top:18px; color:var(--accent);"></i>
             <input type="text" id="searchInput" class="search-input" placeholder="Search account ID or Name..." onkeyup="filterUsers()">
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="setFilter('all', this)">ALL</button>
+            <button class="filter-tab" onclick="setFilter('active', this)">ACTIVE</button>
+            <button class="filter-tab" onclick="setFilter('expired', this)">EXPIRED</button>
+            <button class="filter-tab" onclick="setFilter('blocked', this)">BLOCKED</button>
+            <button class="filter-tab" onclick="setFilter('data_exceeded', this)"><i class="fas fa-database" style="margin-right:4px;"></i>DATA EXCEEDED</button>
         </div>
 
         <div class="container" id="listContainer"></div>
@@ -225,14 +276,26 @@
             
             <p style="font-size: 11px; font-weight: bold; margin-bottom: 5px; opacity: 0.7;">SELECT DURATION:</p>
             <div class="quick-date-group">
-                <button class="q-date-btn" onclick="addFixedDays(30)">1 Month (30D)</button>
-                <button class="q-date-btn" onclick="addFixedDays(60)">2 Months (60D)</button>
-                <button class="q-date-btn" onclick="addFixedDays(360)">1 Year (360D)</button>
+                <button class="q-date-btn" onclick="addFixedDays(30)">1 Month</button>
+                <button class="q-date-btn" onclick="addFixedDays(60)">2 Months</button>
+                <button class="q-date-btn" onclick="addFixedDays(360)">1 Year</button>
             </div>
             <input type="date" id="mDate">
-            
-            <p style="font-size: 11px; font-weight: bold; margin: 10px 0 5px; opacity: 0.7;">DATA LIMIT:</p>
-            <input type="number" id="mDataLimit" min="0" step="0.01" placeholder="Data Limit (GB) - 0 or empty = Unlimited">
+
+            <!-- Data Limit Section -->
+            <p style="font-size: 11px; font-weight: bold; margin: 10px 0 5px; opacity: 0.7;"><i class="fas fa-database" style="color:#a78bfa; margin-right:5px;"></i>DATA LIMIT:</p>
+            <div class="data-quick-group">
+                <button class="d-btn" onclick="setDataLimit(0)">UNLIMITED</button>
+                <button class="d-btn" onclick="setDataLimit(1)">1 GB</button>
+                <button class="d-btn" onclick="setDataLimit(5)">5 GB</button>
+                <button class="d-btn" onclick="setDataLimit(10)">10 GB</button>
+                <button class="d-btn" onclick="setDataLimit(20)">20 GB</button>
+                <button class="d-btn" onclick="setDataLimit(50)">50 GB</button>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center;">
+                <input type="number" id="mDataLimit" placeholder="Custom GB (0 = Unlimited)" min="0" step="0.1" style="flex:1; margin: 0;">
+                <span style="font-size: 12px; font-weight: bold; color: var(--text-dim); white-space: nowrap;">GB</span>
+            </div>
             
             <button class="btn-main" onclick="handleSaveData()">ACTIVATE VIP</button>
             <button class="btn-main" style="background:#4b5563; color: white; margin-top: 5px;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
@@ -258,9 +321,9 @@
             <div class="vip-membership-card" id="voucherPrint">
                 <div class="card-inner">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div style="font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 0.5px;"><i class="fas fa-crown" style="color:var(--gold);"></i> AGE VIP</div>
+                        <div style="font-weight: 900; color: var(--gold); font-size: 20px; letter-spacing: 0.5px;"><i class="fas fa-crown" style="color: var(--gold); margin-right: 6px;"></i>AGE VIP</div>
                         <div class="premium-days-clean">
-                            <span id="vDaysLeft">30 DAYS</span>
+                            <span id="vDaysLeft" style="color: #34d399;">-- DAYS</span>
                         </div>
                     </div>
                     
@@ -283,7 +346,6 @@
         </div>
     </div>
 
-    
     <!-- SETTINGS MODAL -->
     <div class="modal-overlay" id="settingsModal">
         <div class="modal-content">
@@ -308,6 +370,59 @@
         </div>
     </div>
 
+    <!-- DATA LIMIT MANAGEMENT MODAL -->
+    <div class="modal-overlay" id="dataModal">
+        <div class="data-modal-content">
+            <h3 style="margin-bottom: 5px; font-weight: 900; color: #a78bfa;"><i class="fas fa-database" style="margin-right: 8px;"></i>DATA LIMIT CONTROL</h3>
+            <p id="dataModalUserName" style="font-size: 12px; color: var(--text-dim); margin-bottom: 15px;"></p>
+            
+            <!-- Current Data Info -->
+            <div class="data-info-box">
+                <div class="data-info-row">
+                    <span class="data-info-key">Data Used</span>
+                    <span class="data-info-val" id="dmUsed">-- GB</span>
+                </div>
+                <div class="data-info-row">
+                    <span class="data-info-key">Data Limit</span>
+                    <span class="data-info-val" id="dmLimit">-- GB</span>
+                </div>
+                <div class="data-info-row">
+                    <span class="data-info-key">Remaining</span>
+                    <span class="data-info-val" id="dmRemaining">-- GB</span>
+                </div>
+                <div class="data-info-row">
+                    <span class="data-info-key">Status</span>
+                    <span id="dmStatus">--</span>
+                </div>
+            </div>
+
+            <!-- Set New Limit -->
+            <p style="font-size: 11px; font-weight: bold; margin: 12px 0 5px; opacity: 0.7;">SET NEW DATA LIMIT:</p>
+            <div class="data-quick-group">
+                <button class="d-btn" onclick="setDataLimitModal(0)">UNLIMITED</button>
+                <button class="d-btn" onclick="setDataLimitModal(1)">1 GB</button>
+                <button class="d-btn" onclick="setDataLimitModal(5)">5 GB</button>
+                <button class="d-btn" onclick="setDataLimitModal(10)">10 GB</button>
+                <button class="d-btn" onclick="setDataLimitModal(20)">20 GB</button>
+                <button class="d-btn" onclick="setDataLimitModal(50)">50 GB</button>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 5px;">
+                <input type="number" id="dmNewLimit" placeholder="Custom GB (0 = Unlimited)" min="0" step="0.1" style="flex:1; margin: 0;">
+                <span style="font-size: 12px; font-weight: bold; color: var(--text-dim); white-space: nowrap;">GB</span>
+            </div>
+            <button class="btn-main" style="background: #7c3aed;" onclick="saveDataLimit()">SAVE LIMIT</button>
+
+            <!-- Reset Usage -->
+            <p style="font-size: 11px; font-weight: bold; margin: 12px 0 5px; opacity: 0.7;">RESET DATA USAGE:</p>
+            <div class="reset-confirm-box">
+                <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 10px;">This will reset the used data counter to 0 GB for this user.</p>
+                <button class="btn-main" style="background: #dc2626; margin-top: 0;" onclick="resetDataUsage()"><i class="fas fa-redo" style="margin-right: 6px;"></i>RESET USAGE TO 0</button>
+            </div>
+
+            <button class="btn-main" style="background:#4b5563; color: white; margin-top: 10px;" onclick="document.getElementById('dataModal').style.display='none'">CLOSE</button>
+        </div>
+    </div>
+
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyB3cFSVLfpvHPeD732r-iL4Yfhi0wHEuOA",
@@ -321,11 +436,13 @@
         const db = firebase.firestore();
         let allUsers = [];
         let userIdToDelete = null;
+        let currentDataUserId = null;
+        let currentFilter = 'all';
 
         // Default Credentials
         const DEFAULT_USER = "AGEVPN";
         const DEFAULT_PASS = "1234567";
-        const ADMIN_DOC_ID = "---ADMIN_CREDENTIALS---"; // Using a unique ID in users collection
+        const ADMIN_DOC_ID = "---ADMIN_CREDENTIALS---";
 
         /* ရက်အလိုက် ကာလာခွဲခြားပေးမည့် Function */
         function getProgressColor(days, isActive) {
@@ -335,6 +452,21 @@
             if (days <= 14) return '#eab308';  
             if (days <= 30) return '#84cc16';  
             return '#10b981';                  
+        }
+
+        /* Data bar color */
+        function getDataBarColor(pct) {
+            if (pct >= 90) return '#ef4444';
+            if (pct >= 70) return '#eab308';
+            if (pct >= 50) return '#84cc16';
+            return '#34d399';
+        }
+
+        /* Format bytes to GB/MB */
+        function formatData(gb) {
+            if (gb === null || gb === undefined) return '0 GB';
+            if (gb < 1) return (gb * 1024).toFixed(1) + ' MB';
+            return gb.toFixed(2) + ' GB';
         }
 
         function toggleMode() {
@@ -360,6 +492,25 @@
             document.getElementById('mDate').value = d.toISOString().split('T')[0];
         }
 
+        function setDataLimit(gb) {
+            document.getElementById('mDataLimit').value = gb;
+            document.querySelectorAll('#inputModal .d-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function setDataLimitModal(gb) {
+            document.getElementById('dmNewLimit').value = gb;
+            document.querySelectorAll('#dataModal .d-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function setFilter(filter, el) {
+            currentFilter = filter;
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            filterUsers();
+        }
+
         async function handleLogin() {
             const user = document.getElementById('adminUser').value.trim();
             const pass = document.getElementById('adminPass').value.trim();
@@ -371,7 +522,6 @@
             btn.disabled = true;
 
             try {
-                // Fetch credentials from 'users' collection (existing permission)
                 const doc = await db.collection("users").doc(ADMIN_DOC_ID).get();
                 let savedUser = DEFAULT_USER;
                 let savedPass = DEFAULT_PASS;
@@ -380,11 +530,10 @@
                     savedUser = doc.data().u;
                     savedPass = doc.data().p;
                 } else {
-                    // Initialize default credentials in Firestore if not exists
                     await db.collection("users").doc(ADMIN_DOC_ID).set({
                         u: DEFAULT_USER,
                         p: DEFAULT_PASS,
-                        isAdmin: true // Mark as admin doc
+                        isAdmin: true
                     });
                 }
 
@@ -501,24 +650,101 @@
         function handleSaveData() {
             const id = document.getElementById('mId').value.trim(), 
                   name = document.getElementById('mName').value.trim(), 
-                  date = document.getElementById('mDate').value,
-                  dataLimitGBInput = document.getElementById('mDataLimit').value.trim();
+                  date = document.getElementById('mDate').value;
+            const dataLimitRaw = document.getElementById('mDataLimit').value;
+            const dataLimit = dataLimitRaw === '' ? 0 : parseFloat(dataLimitRaw);
             
             if(!id || !name || !date) return alert("All fields are required!");
-            const dataLimitGB = dataLimitGBInput === "" ? 0 : parseFloat(dataLimitGBInput);
-            if (isNaN(dataLimitGB) || dataLimitGB < 0) return alert("Data Limit must be 0 or a positive number!");
-            const dataLimitMB = Math.round(dataLimitGB * 1024);
 
-            db.collection("users").doc(id).set({
+            const userData = {
                 username: name,
                 expiryDate: date,
                 isActive: true,
-                dataLimitMB: dataLimitMB,
-                dataLimitGB: dataLimitGB
-            }, { merge: true }).then(() => {
+                dataLimit: isNaN(dataLimit) ? 0 : dataLimit, // 0 = unlimited
+                dataUsed: 0 // Initialize to 0 on new registration
+            };
+
+            // If editing existing user, preserve dataUsed
+            const existing = allUsers.find(u => u.id === id);
+            if (existing && existing.dataUsed !== undefined) {
+                userData.dataUsed = existing.dataUsed;
+            }
+
+            db.collection("users").doc(id).set(userData, { merge: true }).then(() => {
                 alert("VIP Activated Successfully!");
                 document.getElementById('inputModal').style.display = 'none';
             });
+        }
+
+        /* Open Data Limit Modal */
+        async function openDataModal(userId, userName) {
+            currentDataUserId = userId;
+            document.getElementById('dataModalUserName').innerText = 'User: ' + userName + ' (' + userId + ')';
+            document.getElementById('dataModal').style.display = 'flex';
+            document.getElementById('dmUsed').innerText = 'Loading...';
+            document.getElementById('dmLimit').innerText = 'Loading...';
+            document.getElementById('dmRemaining').innerText = 'Loading...';
+            document.getElementById('dmStatus').innerHTML = 'Loading...';
+            document.getElementById('dmNewLimit').value = '';
+
+            try {
+                const doc = await db.collection("users").doc(userId).get();
+                if (doc.exists) {
+                    const d = doc.data();
+                    const used = d.dataUsed || 0;
+                    const limit = d.dataLimit || 0;
+                    
+                    document.getElementById('dmUsed').innerText = formatData(used);
+                    document.getElementById('dmNewLimit').value = limit;
+
+                    if (limit === 0) {
+                        document.getElementById('dmLimit').innerText = 'UNLIMITED';
+                        document.getElementById('dmRemaining').innerText = 'UNLIMITED';
+                        document.getElementById('dmStatus').innerHTML = '<span class="data-unlimited-badge"><i class="fas fa-infinity"></i> UNLIMITED</span>';
+                    } else {
+                        const remaining = Math.max(0, limit - used);
+                        document.getElementById('dmLimit').innerText = formatData(limit);
+                        document.getElementById('dmRemaining').innerText = formatData(remaining);
+                        if (used >= limit) {
+                            document.getElementById('dmStatus').innerHTML = '<span class="data-exceeded-badge"><i class="fas fa-exclamation-circle"></i> EXCEEDED</span>';
+                        } else {
+                            document.getElementById('dmStatus').innerHTML = '<span class="data-ok-badge"><i class="fas fa-check-circle"></i> OK</span>';
+                        }
+                    }
+                }
+            } catch (err) {
+                alert("Error loading data: " + err.message);
+            }
+        }
+
+        async function saveDataLimit() {
+            if (!currentDataUserId) return;
+            const limitRaw = document.getElementById('dmNewLimit').value;
+            const limit = limitRaw === '' ? 0 : parseFloat(limitRaw);
+            if (isNaN(limit) || limit < 0) return alert("Please enter a valid data limit (0 for unlimited).");
+
+            try {
+                await db.collection("users").doc(currentDataUserId).update({ dataLimit: limit });
+                alert(limit === 0 ? "Data limit set to UNLIMITED!" : `Data limit set to ${limit} GB!`);
+                // Refresh modal
+                const user = allUsers.find(u => u.id === currentDataUserId);
+                if (user) openDataModal(currentDataUserId, user.username);
+            } catch (err) {
+                alert("Error saving limit: " + err.message);
+            }
+        }
+
+        async function resetDataUsage() {
+            if (!currentDataUserId) return;
+            if (!confirm("Reset data usage to 0 for this user?")) return;
+            try {
+                await db.collection("users").doc(currentDataUserId).update({ dataUsed: 0 });
+                alert("Data usage reset to 0 successfully!");
+                const user = allUsers.find(u => u.id === currentDataUserId);
+                if (user) openDataModal(currentDataUserId, user.username);
+            } catch (err) {
+                alert("Error resetting data: " + err.message);
+            }
         }
 
         function renderUsers(users) {
@@ -527,8 +753,37 @@
             const today = new Date();
             today.setHours(0,0,0,0);
 
-            users.forEach(u => {
-                // Skip the admin credential document from the list
+            // Apply filter
+            let filtered = users;
+            if (currentFilter === 'active') {
+                filtered = users.filter(u => {
+                    const expDate = new Date(u.expiryDate); expDate.setHours(0,0,0,0);
+                    return u.isActive && expDate >= today;
+                });
+            } else if (currentFilter === 'expired') {
+                filtered = users.filter(u => {
+                    const expDate = new Date(u.expiryDate); expDate.setHours(0,0,0,0);
+                    return expDate < today;
+                });
+            } else if (currentFilter === 'blocked') {
+                filtered = users.filter(u => !u.isActive);
+            } else if (currentFilter === 'data_exceeded') {
+                filtered = users.filter(u => {
+                    const limit = u.dataLimit || 0;
+                    const used = u.dataUsed || 0;
+                    return limit > 0 && used >= limit;
+                });
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 60px 20px; color: var(--text-dim);">
+                    <i class="fas fa-inbox" style="font-size: 48px; opacity: 0.3; display: block; margin-bottom: 15px;"></i>
+                    <p style="font-weight: bold;">No users found</p>
+                </div>`;
+                return;
+            }
+
+            filtered.forEach(u => {
                 if (u.id === ADMIN_DOC_ID) return;
 
                 const expDate = new Date(u.expiryDate);
@@ -538,9 +793,41 @@
                 
                 const cardColor = getProgressColor(daysLeft, u.isActive);
                 const progress = Math.max(0, Math.min(100, (daysLeft / 30) * 100));
-                const dataLimitMB = Number(u.dataLimitMB || 0);
-                const dataLimitText = dataLimitMB > 0 ? (dataLimitMB >= 1024 ? (dataLimitMB / 1024).toFixed(2).replace(/\.00$/, '') + ' GB' : dataLimitMB + ' MB') : 'Unlimited';
                 const dashOffset = 188.4 - (188.4 * progress / 100);
+
+                // Data usage info
+                const dataLimit = u.dataLimit || 0;
+                const dataUsed = u.dataUsed || 0;
+                let dataBarHtml = '';
+                if (dataLimit === 0) {
+                    // Unlimited
+                    dataBarHtml = `
+                        <div class="data-usage-section">
+                            <div class="data-usage-header">
+                                <span class="data-usage-label"><i class="fas fa-database" style="color:#a78bfa;"></i> DATA USAGE</span>
+                                <span class="data-unlimited-badge"><i class="fas fa-infinity"></i> UNLIMITED</span>
+                            </div>
+                            <div class="data-bar-bg"><div class="data-bar-fill data-bar-unlimited"></div></div>
+                            <div class="data-tooltip">Used: ${formatData(dataUsed)}</div>
+                        </div>`;
+                } else {
+                    const pct = Math.min(100, (dataUsed / dataLimit) * 100);
+                    const barColor = getDataBarColor(pct);
+                    const exceeded = dataUsed >= dataLimit;
+                    dataBarHtml = `
+                        <div class="data-usage-section">
+                            <div class="data-usage-header">
+                                <span class="data-usage-label"><i class="fas fa-database" style="color:#a78bfa;"></i> DATA USAGE</span>
+                                ${exceeded 
+                                    ? '<span class="data-exceeded-badge"><i class="fas fa-exclamation-circle"></i> EXCEEDED</span>'
+                                    : `<span class="data-usage-value" style="color:${barColor}">${pct.toFixed(1)}%</span>`}
+                            </div>
+                            <div class="data-bar-bg">
+                                <div class="data-bar-fill" style="width:${pct}%; background:${barColor};"></div>
+                            </div>
+                            <div class="data-tooltip">${formatData(dataUsed)} / ${formatData(dataLimit)} &nbsp;|&nbsp; Remaining: ${formatData(Math.max(0, dataLimit - dataUsed))}</div>
+                        </div>`;
+                }
 
                 const card = document.createElement('div');
                 card.className = 'user-card';
@@ -561,14 +848,14 @@
                     <div class="user-data-wrapper">
                         <div class="data-item"><div class="data-label">Account ID</div><div class="data-value id">${u.id}</div></div>
                         <div class="data-item right-align"><div class="data-label">Expiration</div><div class="data-value">${u.expiryDate.split('-').reverse().join('/')}</div></div>
-                        <div class="data-item"><div class="data-label">Data Limit</div><div class="data-value">${dataLimitText}</div></div>
-                        <div class="data-item right-align"><div class="data-label">Limit Field</div><div class="data-value">${dataLimitMB > 0 ? dataLimitMB + ' MB' : 'OFF'}</div></div>
                     </div>
+                    ${dataBarHtml}
                     <div class="action-group">
-                        <button class="act-btn btn-edit" onclick="openInputModal('${u.id}', '${u.username}', '${u.expiryDate}', '${u.dataLimitMB || 0}')"><i class="fas fa-edit"></i></button>
-                        <button class="act-btn ${u.isActive ? 'btn-block' : 'btn-unblock'}" onclick="toggleStatus('${u.id}', ${u.isActive})"><i class="fas fa-${u.isActive ? 'ban' : 'check'}"></i></button>
-                        <button class="act-btn btn-card" onclick="showVoucher('${u.id}', '${u.username}', '${u.expiryDate}')"><i class="fas fa-id-card"></i></button>
-                        <button class="act-btn btn-delete" onclick="confirmDelete('${u.id}', '${u.username}')"><i class="fas fa-trash"></i></button>
+                        <button class="act-btn btn-edit" onclick="openInputModal('${u.id}', '${u.username}', '${u.expiryDate}', ${dataLimit})" title="Edit"><i class="fas fa-edit"></i></button>
+                        <button class="act-btn ${u.isActive ? 'btn-block' : 'btn-unblock'}" onclick="toggleStatus('${u.id}', ${u.isActive})" title="${u.isActive ? 'Block' : 'Unblock'}"><i class="fas fa-${u.isActive ? 'ban' : 'check'}"></i></button>
+                        <button class="act-btn btn-data" onclick="openDataModal('${u.id}', '${u.username}')" title="Data Limit"><i class="fas fa-database"></i></button>
+                        <button class="act-btn btn-card" onclick="showVoucher('${u.id}', '${u.username}', '${u.expiryDate}')" title="Voucher"><i class="fas fa-id-card"></i></button>
+                        <button class="act-btn btn-delete" onclick="confirmDelete('${u.id}', '${u.username}')" title="Delete"><i class="fas fa-trash"></i></button>
                     </div>
                 `;
                 container.appendChild(card);
@@ -606,33 +893,44 @@
         }
 
         db.collection("users").onSnapshot(snap => {
-            allUsers = []; let t = 0, a = 0;
+            allUsers = []; let t = 0, a = 0, dl = 0;
             const today = new Date();
             today.setHours(0,0,0,0);
             
             snap.forEach(doc => {
                 const d = doc.data();
-                // Skip the admin doc from counts and list
                 if (doc.id === ADMIN_DOC_ID) return;
 
                 t++;
                 const expDate = new Date(d.expiryDate);
                 expDate.setHours(0,0,0,0);
                 if(d.isActive && (expDate >= today)) a++;
+                
+                // Count data limited users
+                const limit = d.dataLimit || 0;
+                if (limit > 0) dl++;
+
                 allUsers.push({ id: doc.id, ...d });
             });
             document.getElementById('totalCount').innerText = t;
             document.getElementById('activeCount').innerText = a;
+            document.getElementById('dataLimitedCount').innerText = dl;
             filterUsers();
         });
 
-        function openInputModal(id='', name='', date='', dataLimitMB='') {
+        function openInputModal(id='', name='', date='', dataLimit=0) {
             document.getElementById('mId').value = id;
             document.getElementById('mId').disabled = id !== '';
             document.getElementById('mName').value = name;
             document.getElementById('mDate').value = date;
-            const mb = Number(dataLimitMB || 0);
-            document.getElementById('mDataLimit').value = mb > 0 ? (mb / 1024).toFixed(2).replace(/\.00$/, '') : '';
+            document.getElementById('mDataLimit').value = dataLimit;
+            // Reset active state on data buttons
+            document.querySelectorAll('#inputModal .d-btn').forEach(b => {
+                b.classList.remove('active');
+                if (parseFloat(b.innerText) === dataLimit || (dataLimit === 0 && b.innerText === 'UNLIMITED')) {
+                    b.classList.add('active');
+                }
+            });
             document.getElementById('inputModal').style.display = 'flex';
         }
 
@@ -645,6 +943,7 @@
         }
 
         window.onload = checkAuth;
-    </script>
+</script>
+
 </body>
 </html>
