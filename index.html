@@ -231,8 +231,35 @@
             </div>
             <input type="date" id="mDate">
             
-            <button class="btn-main" onclick="handleSaveData()">ACTIVATE VIP</button>
+            <button class="btn-main" onclick="showActivateConfirm()">ACTIVATE VIP</button>
+            <button class="btn-main" style="background:#f59e0b; color: #000000; margin-top: 5px;" id="extendBtn" style="display:none;" onclick="showExtendConfirm()">EXTEND 30 DAYS</button>
             <button class="btn-main" style="background:#4b5563; color: white; margin-top: 5px;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
+        </div>
+    </div>
+
+    <!-- EXTEND CONFIRMATION MODAL -->
+    <div class="modal-overlay" id="extendConfirmModal">
+        <div class="modal-content" style="border-color: #f59e0b; text-align: center;">
+            <i class="fas fa-clock" style="font-size: 40px; color: #f59e0b; margin-bottom: 15px;"></i>
+            <h3 style="font-weight: 900; color: var(--text-main); margin-bottom: 10px;">Extend License?</h3>
+            <p style="font-size: 14px; color: var(--text-dim);">Are you sure you want to add <br><b style="color:var(--accent)">30 DAYS</b> to this user?</p>
+            <div class="delete-btn-group">
+                <button class="btn-confirm-del" style="background: #f59e0b; color: #000000;" onclick="executeExtend()">YES, EXTEND</button>
+                <button class="btn-cancel-del" onclick="closeExtendModal()">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIVATE CONFIRMATION MODAL -->
+    <div class="modal-overlay" id="activateConfirmModal">
+        <div class="modal-content" style="border-color: var(--accent); text-align: center;">
+            <i class="fas fa-shield-alt" style="font-size: 40px; color: var(--accent); margin-bottom: 15px;"></i>
+            <h3 style="font-weight: 900; color: var(--text-main); margin-bottom: 10px;">Activate VIP?</h3>
+            <p style="font-size: 14px; color: var(--text-dim);">Are you sure you want to <br><b style="color:var(--accent)">ACTIVATE</b> this license?</p>
+            <div class="delete-btn-group">
+                <button class="btn-confirm-del" style="background: var(--accent); color: #000000;" onclick="handleSaveData()">YES, ACTIVATE</button>
+                <button class="btn-cancel-del" onclick="closeActivateModal()">CANCEL</button>
+            </div>
         </div>
     </div>
 
@@ -355,6 +382,31 @@
             let d = new Date();
             d.setDate(d.getDate() + days);
             document.getElementById('mDate').value = d.toISOString().split('T')[0];
+        }
+
+        function showExtendConfirm() {
+            document.getElementById('extendConfirmModal').style.display = 'flex';
+        }
+
+        function closeExtendModal() {
+            document.getElementById('extendConfirmModal').style.display = 'none';
+        }
+
+        function executeExtend() {
+            const id = document.getElementById('mId').value;
+            const currentDate = document.getElementById('mDate').value;
+            
+            if (!id || !currentDate) return alert("Invalid user data!");
+            
+            let newDate = new Date(currentDate);
+            newDate.setDate(newDate.getDate() + 30);
+            const newDateStr = newDate.toISOString().split('T')[0];
+            
+            db.collection("users").doc(id).update({ expiryDate: newDateStr }).then(() => {
+                alert("Extended by 30 days successfully!");
+                closeExtendModal();
+                document.getElementById('inputModal').style.display = 'none';
+            }).catch(err => alert("Error: " + err.message));
         }
 
         async function handleLogin() {
@@ -495,19 +547,31 @@
             document.getElementById('voucherOverlay').style.display = 'flex';
         }
 
-        function handleSaveData() {
+        function showActivateConfirm() {
             const id = document.getElementById('mId').value.trim(), 
                   name = document.getElementById('mName').value.trim(), 
                   date = document.getElementById('mDate').value;
             
             if(!id || !name || !date) return alert("All fields are required!");
+            document.getElementById('activateConfirmModal').style.display = 'flex';
+        }
 
+        function closeActivateModal() {
+            document.getElementById('activateConfirmModal').style.display = 'none';
+        }
+
+        function handleSaveData() {
+            const id = document.getElementById('mId').value.trim(), 
+                  name = document.getElementById('mName').value.trim(), 
+                  date = document.getElementById('mDate').value;
+            
             db.collection("users").doc(id).set({
                 username: name,
                 expiryDate: date,
                 isActive: true
             }).then(() => {
                 alert("VIP Activated Successfully!");
+                closeActivateModal();
                 document.getElementById('inputModal').style.display = 'none';
             });
         }
@@ -618,6 +682,19 @@
             document.getElementById('mId').disabled = id !== '';
             document.getElementById('mName').value = name;
             document.getElementById('mDate').value = date;
+            
+            // Show/hide extend button based on whether editing or creating
+            const extendBtn = document.getElementById('extendBtn');
+            if (id && name && date) {
+                // Editing mode - show extend button
+                extendBtn.style.display = 'block';
+                document.getElementById('mName').disabled = true;
+            } else {
+                // Creating mode - hide extend button
+                extendBtn.style.display = 'none';
+                document.getElementById('mName').disabled = false;
+            }
+            
             document.getElementById('inputModal').style.display = 'flex';
         }
 
