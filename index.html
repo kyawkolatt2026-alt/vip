@@ -46,37 +46,6 @@
         .nav-icons { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
         .icon-btn { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); padding: 10px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* Language Filter Dropdown */
-        .filter-container {
-            position: absolute;
-            top: 15px;
-            left: 20px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .filter-select {
-            background: rgba(255,255,255,0.12);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.25);
-            padding: 7px 12px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            outline: none;
-            appearance: none;
-            -webkit-appearance: none;
-            padding-right: 28px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-        }
-        .filter-select option {
-            background: #0f192a;
-            color: white;
-        }
-
         .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 500px; margin: 20px auto 0; }
         .stat-card { background: rgba(255,255,255,0.06); padding: 15px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
         .stat-card h2 { font-size: 28px; color: var(--gold); }
@@ -89,28 +58,6 @@
         .user-card { background: var(--bg-card); border: 1px solid var(--card-border); border-radius: 22px; padding: 18px; display: grid; grid-template-rows: auto auto auto; gap: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); position: relative; overflow: hidden; }
         
         .status-badge { position: absolute; top: 15px; right: 15px; padding: 4px 10px; border-radius: 8px; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; z-index: 10; }
-
-        /* Flag Icon Badge */
-        .flag-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-            z-index: 11;
-            background: white;
-        }
-        .flag-badge img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
 
         .card-top { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 15px; }
         
@@ -150,33 +97,6 @@
         .quick-date-group { display: flex; gap: 8px; margin-bottom: 10px; }
         .q-date-btn { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .q-date-btn:hover { background: var(--accent); color: #000000; border-color: var(--accent); }
-
-        /* Language Selector in Register Modal */
-        .lang-group { display: flex; gap: 8px; margin-bottom: 10px; }
-        .lang-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            border: 2px solid var(--card-border);
-            background: var(--bg-body);
-            color: var(--text-main);
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        .lang-btn:hover { border-color: var(--accent); }
-        .lang-btn.active { background: var(--accent); color: #000000; border-color: var(--accent); }
-        .lang-btn img {
-            width: 20px;
-            height: 14px;
-            border-radius: 3px;
-            object-fit: cover;
-        }
 
         input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid var(--card-border); background: var(--bg-body); color: var(--text-main); font-weight: bold; }
         input:focus { border-color: var(--accent); outline: none; }
@@ -252,7 +172,6 @@
         .btn-confirm-del { padding: 12px; background: #dc2626; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
         .btn-cancel-del { padding: 12px; background: #4b5563; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; }
 
-        /* Password Wrapper for toggle icon */
         .password-wrapper { position: relative; }
         .password-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-dim); }
         .password-wrapper i:hover { color: var(--accent); }
@@ -279,14 +198,7 @@
                 <button class="icon-btn" onclick="toggleMode()"><i id="modeIcon" class="fas fa-sun" style="color:white;"></i></button>
                 <button class="icon-btn" onclick="handleLogout()"><i class="fas fa-power-off" style="color:white;"></i></button>
             </div>
-            <!-- Language Filter Dropdown -->
-            <div class="filter-container">
-                <select id="langFilter" class="filter-select" onchange="filterByLanguage()">
-                    <option value="all">All Users</option>
-                    <option value="mm">🇲🇲 MM Users</option>
-                    <option value="th">🇹🇭 TH Users</option>
-                </select>
-            </div>
+            
             <h1 style="font-weight: 900; font-size: 28px; letter-spacing: 0.5px; color: white;">AGE <span style="color:var(--gold)">VIP</span> PANEL</h1>
             <div class="dashboard">
                 <div class="stat-card"> <h2 id="totalCount">0</h2> <p style="font-size: 10px; font-weight: bold; opacity: 0.7; color: white;">TOTAL USERS</p> </div>
@@ -310,19 +222,6 @@
             <h3 style="margin-bottom: 15px; font-weight: 900; color: var(--accent);">REGISTER LICENSE</h3>
             <input type="text" id="mId" placeholder="Account ID / Token">
             <input type="text" id="mName" placeholder="Customer Name">
-            
-            <!-- Language Selector -->
-            <p style="font-size: 11px; font-weight: bold; margin-bottom: 5px; opacity: 0.7;">SELECT LANGUAGE:</p>
-            <div class="lang-group">
-                <button class="lang-btn active" id="langMM" onclick="selectLanguage('mm')">
-                    <img src="https://flagcdn.com/w40/mm.png" alt="Myanmar" title="Myanmar">
-                    MM User
-                </button>
-                <button class="lang-btn" id="langTH" onclick="selectLanguage('th')">
-                    <img src="https://flagcdn.com/w40/th.png" alt="Thailand" title="Thailand">
-                    TH User
-                </button>
-            </div>
 
             <p style="font-size: 11px; font-weight: bold; margin-bottom: 5px; opacity: 0.7;">SELECT DURATION:</p>
             <div class="quick-date-group">
@@ -333,7 +232,7 @@
             <input type="date" id="mDate">
             
             <button class="btn-main" onclick="showActivateConfirm()">ACTIVATE VIP</button>
-            <button class="btn-main" style="background:#f59e0b; color: #000000; margin-top: 5px;" id="extendBtn" style="display:none;" onclick="showExtendConfirm()">EXTEND 30 DAYS</button>
+            <button class="btn-main" style="background:#f59e0b; color: #000000; margin-top: 5px;" id="extendBtn" onclick="showExtendConfirm()">EXTEND 30 DAYS</button>
             <button class="btn-main" style="background:#4b5563; color: white; margin-top: 5px;" onclick="document.getElementById('inputModal').style.display='none'">CANCEL</button>
         </div>
     </div>
@@ -408,7 +307,6 @@
         </div>
     </div>
 
-    
     <!-- SETTINGS MODAL -->
     <div class="modal-overlay" id="settingsModal">
         <div class="modal-content">
@@ -446,20 +344,11 @@
         const db = firebase.firestore();
         let allUsers = [];
         let userIdToDelete = null;
-        let selectedLanguage = 'mm'; // default language selection
 
-        // Default Credentials
         const DEFAULT_USER = "AGEVPN";
         const DEFAULT_PASS = "1234567";
-        const ADMIN_DOC_ID = "---ADMIN_CREDENTIALS---"; // Using a unique ID in users collection
+        const ADMIN_DOC_ID = "---ADMIN_CREDENTIALS---";
 
-        /* Flag URLs */
-        const FLAG_URLS = {
-            mm: "https://flagcdn.com/w40/mm.png",
-            th: "https://flagcdn.com/w40/th.png"
-        };
-
-        /* ရက်အလိုက် ကာလာခွဲခြားပေးမည့် Function */
         function getProgressColor(days, isActive) {
             if (!isActive) return '#4b5563'; 
             if (days <= 0) return '#ef4444';   
@@ -484,19 +373,6 @@
                 input.type = "password";
                 icon.className = "fas fa-eye";
             }
-        }
-
-        // Language Selection
-        function selectLanguage(lang) {
-            selectedLanguage = lang;
-            document.getElementById('langMM').classList.toggle('active', lang === 'mm');
-            document.getElementById('langTH').classList.toggle('active', lang === 'th');
-        }
-
-        // Filter by Language Dropdown
-        function filterByLanguage() {
-            const lang = document.getElementById('langFilter').value;
-            filterUsers();
         }
 
         function addFixedDays(days) {
@@ -541,7 +417,6 @@
             btn.disabled = true;
 
             try {
-                // Fetch credentials from 'users' collection (existing permission)
                 const doc = await db.collection("users").doc(ADMIN_DOC_ID).get();
                 let savedUser = DEFAULT_USER;
                 let savedPass = DEFAULT_PASS;
@@ -550,11 +425,10 @@
                     savedUser = doc.data().u;
                     savedPass = doc.data().p;
                 } else {
-                    // Initialize default credentials in Firestore if not exists
                     await db.collection("users").doc(ADMIN_DOC_ID).set({
                         u: DEFAULT_USER,
                         p: DEFAULT_PASS,
-                        isAdmin: true // Mark as admin doc
+                        isAdmin: true
                     });
                 }
 
@@ -689,14 +563,11 @@
             db.collection("users").doc(id).set({
                 username: name,
                 expiryDate: date,
-                isActive: true,
-                language: selectedLanguage  // Save language selection
+                isActive: true
             }).then(() => {
                 alert("VIP Activated Successfully!");
                 closeActivateModal();
                 document.getElementById('inputModal').style.display = 'none';
-                // Reset language to default
-                selectLanguage('mm');
             });
         }
 
@@ -707,7 +578,6 @@
             today.setHours(0,0,0,0);
 
             users.forEach(u => {
-                // Skip the admin credential document from the list
                 if (u.id === ADMIN_DOC_ID) return;
 
                 const expDate = new Date(u.expiryDate);
@@ -719,19 +589,11 @@
                 const progress = Math.max(0, Math.min(100, (daysLeft / 30) * 100));
                 const dashOffset = 188.4 - (188.4 * progress / 100);
 
-                // Determine flag URL
-                const userLang = u.language || 'mm';
-                const flagUrl = FLAG_URLS[userLang] || FLAG_URLS['mm'];
-
                 const card = document.createElement('div');
                 card.className = 'user-card';
                 card.innerHTML = `
                     <div class="status-badge" style="background: ${cardColor}20; color: ${cardColor}; border: 1px solid ${cardColor}40;">
                         ${!u.isActive ? 'BLOCKED' : (daysLeft <= 0 ? 'EXPIRED' : 'ACTIVE')}
-                    </div>
-                    <!-- Flag Badge in top-right corner -->
-                    <div class="flag-badge">
-                        <img src="${flagUrl}" alt="${userLang.toUpperCase()}">
                     </div>
                     <div class="card-top">
                         <div class="progress-circle">
@@ -784,15 +646,7 @@
 
         function filterUsers() {
             const term = document.getElementById('searchInput').value.toLowerCase();
-            const langFilter = document.getElementById('langFilter').value;
-
             let filtered = allUsers.filter(u => u.id.toLowerCase().includes(term) || (u.username && u.username.toLowerCase().includes(term)));
-
-            // Apply language filter
-            if (langFilter !== 'all') {
-                filtered = filtered.filter(u => (u.language || 'mm') === langFilter);
-            }
-
             renderUsers(filtered);
         }
 
@@ -803,7 +657,6 @@
             
             snap.forEach(doc => {
                 const d = doc.data();
-                // Skip the admin doc from counts and list
                 if (doc.id === ADMIN_DOC_ID) return;
 
                 t++;
@@ -823,20 +676,14 @@
             document.getElementById('mName').value = name;
             document.getElementById('mDate').value = date;
             
-            // Show/hide extend button based on whether editing or creating
             const extendBtn = document.getElementById('extendBtn');
             if (id && name && date) {
-                // Editing mode - show extend button
                 extendBtn.style.display = 'block';
                 document.getElementById('mName').disabled = true;
             } else {
-                // Creating mode - hide extend button
                 extendBtn.style.display = 'none';
                 document.getElementById('mName').disabled = false;
             }
-            
-            // Reset language to default MM when opening create modal
-            selectLanguage('mm');
             
             document.getElementById('inputModal').style.display = 'flex';
         }
